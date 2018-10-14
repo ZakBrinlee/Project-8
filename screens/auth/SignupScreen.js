@@ -3,6 +3,10 @@ import React from 'react';
 import { StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
+import SwitchSelector from 'react-native-switch-selector';//for toggle selector
+
+//Used this tutorial for toggle switch https://github.com/App2Sales/react-native-switch-selector
+
 
 export default class SignupScreen extends React.Component {
 
@@ -69,6 +73,21 @@ export default class SignupScreen extends React.Component {
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
+                
+                <View style={{paddingTop:30}} />
+
+                //toggle        
+                <SwitchSelector
+                    initial={0}
+                    onPress={value => this.setState({ role: value })}
+                    textColor={'#1a1a1a'} //'#7a44cf'
+                    selectedColor={'#1a1a1a'}
+                    buttonColor={'#99ffcc'}
+                    borderColor={'#cc99ff'}
+                    fontSize={'20px'}
+                    options={options}
+
+                   />
 
                 <Button title="Signup" onPress={this.onSignupPress} />
 
@@ -81,3 +100,10 @@ export default class SignupScreen extends React.Component {
 const styles = StyleSheet.create({
 
 });
+
+//toggle
+const options = [
+    { label: 'Client', value: 'client' },
+    { label: 'Stylist', value: 'stylist' }
+];
+
