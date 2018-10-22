@@ -31,16 +31,6 @@ export default class SignupScreen extends React.Component {
             .then(() => { }, (error) => { Alert.alert(error.message); });
 
         this.writeUserData(this.state.email, this.state.role);
-        // firebase.database().ref('UsersList/').push({
-        //     this.state.email,
-        //     this.state.role
-        // }).then((data)=>{
-        //     //success callback
-        //     console.log('data ' , data)
-        // }).catch((error)=>{
-        //     //error callback
-        //     console.log('error ' , error)
-        // })
         
     }
 

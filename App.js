@@ -6,6 +6,7 @@ import RootNavigation from './navigation/RootNavigation';
 import MainTabNavigator from './navigation/MainTabNavigator';
 import ApiKeys from './constants/ApiKeys';
 import * as firebase from 'firebase';
+import { ColdObservable } from 'rxjs/testing/ColdObservable';
 
 export default class App extends React.Component {
   
@@ -25,6 +26,16 @@ export default class App extends React.Component {
   onAuthStateChanged = (user) => {
     this.setState({isAuthenticationReady: true});
     this.setState({isAuthenticated: !!user});
+    var user = firebase.auth().currentUser;
+
+    if (user != null) {
+      email = user.email;
+      uid = user.uid;
+      // The user's ID, unique to the Firebase project. Do NOT use
+      // this value to authenticate with your backend server, if
+      // you have one. Use User.getToken() instead.
+      console.log("User email: " + email + " User ID: " + uid);
+    }
   }
 
   render() {

@@ -4,11 +4,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 import TestScreen from '../screens/TestScreen';
+import ClientHomeScreen from '../screens/client/ClientHomeScreen';
 
 export default TabNavigator(
   {
     Test: {
-      screen: TestScreen,
+      //screen: TestScreen,
+      screen: ClientHomeScreen,
     },
   },
   {
@@ -17,7 +19,7 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
-          case 'Test':
+          case 'Sign Out':
             iconName =
               Platform.OS === 'ios'
                 ? `ios-information-circle${focused ? '' : '-outline'}`
