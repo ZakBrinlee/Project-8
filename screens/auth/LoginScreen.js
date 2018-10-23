@@ -1,10 +1,14 @@
 
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
+import { Platform,StyleSheet, View, Text, TextInput, Button, Alert,Image,TouchableOpacity} from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
 
 export default class LoginScreen extends React.Component {
+
+    static navigationOptions = {
+        header: null
+    }//remove the default header
 
     constructor(props) {
         super(props);
@@ -13,6 +17,8 @@ export default class LoginScreen extends React.Component {
             password: "",
         };
     }
+
+    
 
     onLoginPress = () => {
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
@@ -37,38 +43,182 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return (
-            <View style={{paddingTop:50, alignItems:"center"}}>
+            <View style={styles.container}>
+                <View style={styles.box1}>
+                    
+                    <Image
+                        style={styles.logo}
+                        source={require('./logo.png')}
+                    />
+                    <Text style={styles.welcome}>WELCOME TO PRIVYD</Text>
+                </View>
 
-                <Text>Login</Text> 
+                <View style={styles.box2}>
+                    <Text style={styles.box2_text1}>PASSION FOR STYLE</Text>
+                    <Text style={styles.box2_text2}>&</Text>
+                    <Text style={styles.box2_text3}>LIFE-LONG CLIENTS.</Text>
+                </View>
+            
+                <View style={styles.loginbox}>
 
-                <TextInput style={{width: 200, height: 40, borderWidth: 1}}
-                    value={this.state.email}
-                    onChangeText={(text) => { this.setState({email: text}) }}
-                    placeholder="Email"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
+                    <Text style={styles.login}>Login</Text> 
 
-                <View style={{paddingTop:10}} />
+                    <TextInput style={styles.textinput}
+                        value={this.state.email}
+                        onChangeText={(text) => { this.setState({email: text}) }}
+                        placeholder="Email"
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
 
-                <TextInput style={{width: 200, height: 40, borderWidth: 1}}
-                    value={this.state.password}
-                    onChangeText={(text) => { this.setState({password: text}) }}
-                    placeholder="Password"
-                    secureTextEntry={true}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
+                   
 
-                <Button title="Login" onPress={this.onLoginPress} />
-                <Button title="Create account..." onPress={this.onCreateAccountPress} />
-                <Button title="Forgot Password..." onPress={this.onForgotPasswordPress} />
-            </View>
+                    <TextInput style={styles.textinput}
+                            value={this.state.password}
+                            onChangeText={(text) => { this.setState({password: text}) }}
+                            placeholder="Password"
+                            secureTextEntry={true}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                </View>
+                
+                <View style={styles.loginbt}>
+                    <TouchableOpacity style={styles.botton} onPress={this.onLoginPress}>
+                        <Text style={styles.bottonText}>Login</Text>
+                        
+                    </TouchableOpacity>
+                </View> 
+               
+                <View style={styles.loginbt}>
+                    <TouchableOpacity style={styles.botton} onPress={this.onCreateAccountPress}>
+                        <Text style={styles.bottonText}>Sign Up</Text>
+                        
+                    </TouchableOpacity>
+                </View> 
+                
+                    
+                <View style={styles.loginbt}>
+                    <TouchableOpacity style={styles.botton}  onPress={this.onForgotPasswordPress}>
+                        <Text style={styles.bottonText}>Forgot Password</Text>
+                        
+                    </TouchableOpacity>
+                </View> 
+                    
+                
+                   
+                
+                
+            </View>//finish for the biggest view
         );
     }
 }
 
 const styles = StyleSheet.create({
 
+    container:{
+        paddingTop:6,
+        backgroundColor: 'white',
+        flex:1,
+        
+    },
+
+    box1:{
+        flex:0.25,
+        backgroundColor:'white',
+    },
+
+    logo:{
+        width:85,
+        height:87,
+    },
+
+    welcome:{
+        color:'#B8AA64',
+        fontSize:28,
+        fontWeight:'600',
+        textAlign:'right',
+        paddingRight:5,
+        
+    },
+
+    box2:{
+        flex:0.35,
+        backgroundColor:'#33FFC1',
+    },
+
+    box2_text1:{
+        padding:5,
+        color:'white',
+        fontSize:35,
+        fontWeight:'600',
+        
+    },
+    box2_text2:{
+        padding:5,
+        color:'white',
+        fontSize:38,
+        fontWeight:'600',
+        textAlign:'center',
+       
+    },
+    box2_text3:{
+        padding:5,
+        color:'white',
+        fontSize:35,
+        fontWeight:'600',
+        textAlign:'right',
+        
+    },
+
+    loginbox:{
+        flex:0.25,
+        paddingTop:20, 
+        alignItems:"center",
+    },
+
+    login:{
+        fontSize:20,
+        fontWeight:'bold',
+        color:'gray',
+    },
+
+    textinput:{
+        width: 250, 
+        height: 50, 
+        borderWidth: 0,
+    },
+
+   loginbt:{
+        flex:0.1,
+        alignItems:'center',
+   },
+
+   botton:{
+        width:180,
+        height:40,
+        backgroundColor: '#D6FAEA',
+        borderRadius: 9,
+        alignItems: 'center',
+        justifyContent: 'center',
+        
+   },
+   
+   buttonText: {
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    
+
+
+
 });
+
+
+
+
+
+
+
