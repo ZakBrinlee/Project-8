@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
+    "assets": "^3.0.0",
     "expo": "^25.0.0",
     "firebase": "^5.5.2",
     "react": "16.2.0",
