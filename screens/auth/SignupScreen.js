@@ -14,9 +14,9 @@ export default class SignupScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            email: "",
-            password: "",
-            passwordConfirm: "",
+            email: "test@test.com",
+            password: "testtest",
+            passwordConfirm: "testtest",
             role: "client",
         };
     }
@@ -30,22 +30,30 @@ export default class SignupScreen extends React.Component {
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(() => { }, (error) => { Alert.alert(error.message); });
 
-        this.writeUserData(this.state.email, this.state.role);
-        
+            console.log("Just created user")
+
     }
 
-    writeUserData(email = this.state.email, role = this.state.role){
-        firebase.database().ref('UsersList/').push({
-            email,
-            role
-        }).then((data)=>{
-            //success callback
-            console.log('data ' , data)
-        }).catch((error)=>{
-            //error callback
-            console.log('error ' , error)
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged(user => {
+          if(user) {
+            this.writeUserData(user.uid, user.email, this.state.role);
+          }
         })
-    };
+      }
+    
+      writeUserData(userId, email, role = this.state.role) {
+        firebase.database().ref('UsersList/' + userId).set({
+              email,
+              role,
+            }).then((data)=>{
+                //success callback
+                console.log('data ' , data)
+            }).catch((error)=>{
+                //error callback
+                console.log('error ' , error)
+            })
+        }
 
     onBackToLoginPress = () => {
         var navActions = NavigationActions.reset({

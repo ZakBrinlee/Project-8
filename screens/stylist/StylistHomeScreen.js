@@ -1,10 +1,9 @@
 
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,Image,Button,ScrollView} from 'react-native';
+import {StyleSheet,Text,View,Image,Button} from 'react-native';
 import * as firebase from 'firebase';
-import { AsyncStorage } from "react-native"
 
-export default class ClientHomeScreen extends React.Component {
+export default class StylistHomeScreen extends React.Component {
 
    constructor(props) {
        super(props);
@@ -12,17 +11,12 @@ export default class ClientHomeScreen extends React.Component {
            userEmail: "",
            role: "",
            uid: "",
-           asyncRole: "",
        };
    }
 
    componentDidMount() {
-      this.getUserRole();
-      this.checkPersistData();
-    }
-
-    componentWillMount(){
-      this.checkPersistData();
+        this.getUserRole();
+        console.log("Just called componentDidMount inside ClientHomeScreen");
     }
 
     getUserRole() {
@@ -43,36 +37,24 @@ export default class ClientHomeScreen extends React.Component {
         });         
 
     }
-
-    checkPersistData(){
-      console.log("Inside checkPersistData")
-      AsyncStorage.getItem('userRole').then((userRole)=>{
-        this.setState({asyncRole: userRole })
-      })
-      console.log("asyncRole: " + this.state.asyncRole)
-    }
-
     
     
     onSignoutPress = () => {
         firebase.auth().signOut();
-        AsyncStorage.clear();
       }
 
 
       render() {
         return (
-          <ScrollView style={styles.container}>
+          <View style={styles.container}>
               <View style={styles.header}>
                 <View style={styles.headerContent}>
                     <Image style={styles.avatar}
                       source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
     
-                    <Text style={styles.name}>Client</Text>
+                    <Text style={styles.name}>Stylist</Text>
                     <Text style={styles.userInfo}>{this.state.userEmail}</Text>
-                    <Text style={styles.userInfo}>From DB Role: {this.state.role}</Text>
-                    <Text style={styles.userInfo}>From ASYNC Role: {this.state.asyncRole}</Text>
-                    
+                    <Text style={styles.userInfo}>{this.state.role}</Text>
                 </View>
               </View>
     
@@ -114,7 +96,7 @@ export default class ClientHomeScreen extends React.Component {
                 </View>
                 <Button title="Sign Out" onPress={this.onSignoutPress} />
               </View>
-          </ScrollView>
+          </View>
         );
       }
     }
