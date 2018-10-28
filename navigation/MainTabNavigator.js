@@ -3,12 +3,13 @@ import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
-import TestScreen from '../screens/TestScreen';
+//import TestScreen from '../screens/TestScreen';
+import StylistHome from '../screens/stylist/StylistHome';
 
 export default TabNavigator(
   {
     Test: {
-      screen: TestScreen,
+      screen: StylistHome,
     },
   },
   {

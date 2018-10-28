@@ -1,5 +1,9 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 600
+  "packagerPid": 20296,
+  "devToolsPort": 19002,
+  "expoServerNgrokUrl": "https://na-ggr.tyreed12.project-8.exp.direct",
+  "packagerNgrokUrl": "https://packager.na-ggr.tyreed12.project-8.exp.direct",
+  "ngrokPid": 8844
 }
