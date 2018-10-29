@@ -25,7 +25,23 @@ const RootStackNavigator = StackNavigator(
   }
 );
 
+const getUserRole = async () => {
+  let role = 'test';
+  try {
+    role = await AsyncStorage.getItem('role') || 'none';
+  } catch (error) {
+    // Error retrieving data
+    console.log(error.message);
+  }
+  return role;
+}
+
 export default class RootNavigator extends React.Component {
+
+  // componentWillMount(){
+  //   role = getUserRole;
+  //   this.props.navigation.navigate(role == 'client' ? 'Client' : 'Stylist');
+  // }
   componentDidMount() {
     this._notificationSubscription = this._registerForPushNotifications();
   }
