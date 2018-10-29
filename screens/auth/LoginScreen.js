@@ -105,10 +105,6 @@ export default class LoginScreen extends React.Component {
                         
                     </TouchableOpacity>
                 </View> 
-                    
-                
-                   
-                
                 
             </View>//finish for the biggest view
         );
@@ -174,7 +170,7 @@ const styles = StyleSheet.create({
 
     loginbox:{
         flex:0.25,
-        paddingTop:20, 
+        paddingTop:15, 
         alignItems:"center",
     },
 
