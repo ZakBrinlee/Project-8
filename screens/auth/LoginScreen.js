@@ -54,9 +54,9 @@ export default class LoginScreen extends React.Component {
                 </View>
 
                 <View style={styles.box2}>
-                    <Text style={styles.box2_text1}>PASSION FOR STYLE</Text>
+                    <Text style={styles.box2_text1}>A Space to Create</Text>
                     <Text style={styles.box2_text2}>&</Text>
-                    <Text style={styles.box2_text3}>LIFE-LONG CLIENTS.</Text>
+                    <Text style={styles.box2_text3}>Visualize Style</Text>
                 </View>
             
                 <View style={styles.loginbox}>
