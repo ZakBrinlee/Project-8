@@ -1,162 +1,137 @@
-
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,Image,Button} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Button,
+} from 'react-native';
 import * as firebase from 'firebase';
+ export default class ProfileIconsView extends Component {
 
-export default class StylistHomeScreen extends React.Component {
+  onSignoutPress = () => {
+    firebase.auth().signOut();
+    //AsyncStorage.clear();
+  }
 
-   constructor(props) {
-       super(props);
-       this.state = {
-           userEmail: "",
-           role: "",
-           uid: "",
-       };
-   }
-
-   componentDidMount() {
-        this.getUserRole();
-        console.log("Just called componentDidMount inside ClientHomeScreen");
-    }
-
-    getUserRole() {
-        //console.log("Inside getUserRole");
-        var user = firebase.auth().currentUser;
-        if (user != null){
-            this.setState({uid: user.uid});
-            this.setState({userEmail: user.email});
-        } else {
-            console.log("Unable to locate current user");
-        }
-
-        //console.log("Inside method userEmail: " + this.state.userEmail);
-        var itemsRef = firebase.database().ref('/UsersList/' + user.uid);
-        itemsRef.once('value').then(snapshot => {
-          this.setState({ role: snapshot.child("role").val() });
-          //console.log("User Role from DB: " + this.state.role);
-        });         
-
-    }
-    
-    
-    onSignoutPress = () => {
-        firebase.auth().signOut();
-      }
-
-
-      render() {
-        return (
-          <View style={styles.container}>
-              <View style={styles.header}>
-                <View style={styles.headerContent}>
-                    <Image style={styles.avatar}
-                      source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
-    
-                    <Text style={styles.name}>Stylist</Text>
-                    <Text style={styles.userInfo}>{this.state.userEmail}</Text>
-                    <Text style={styles.userInfo}>{this.state.role}</Text>
-                </View>
-              </View>
-    
-              <View style={styles.body}>
-                <View style={styles.item}>
-                  <View style={styles.iconContent}>
-                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/home/win8/50/ffffff'}}/>
-                  </View>
-                  <View style={styles.infoContent}>
-                    <Text style={styles.info}>Home</Text>
-                  </View>
-                </View>
-    
-                <View style={styles.item}>
-                  <View style={styles.iconContent}>
-                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/settings/win8/50/ffffff'}}/>
-                  </View>
-                  <View style={styles.infoContent}>
-                    <Text style={styles.info}>Settings</Text>
-                  </View>
-                </View>
-    
-                <View style={styles.item}>
-                  <View style={styles.iconContent}>
-                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/news/win8/50/ffffff'}}/>
-                  </View>
-                  <View style={styles.infoContent}>
-                    <Text style={styles.info}>News</Text>
-                  </View>
-                </View>
-    
-                <View style={styles.item} onPress={this.onSignoutPress}>
-                  <View style={styles.iconContent}>
-                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/shopping-basket/ios11/50/ffffff'}}/>
-                  </View>
-                  <View style={styles.infoContent}>
-                    <Text style={styles.info}>Something</Text>
-                  </View>
-                </View>
+   render() {
+    return (
+      <ScrollView style={styles.container}>
+          <View style={styles.header}>
+            <View style={styles.headerContent}>
+                <Image style={styles.avatar}
+                  source={{uri: 'https://bootdey.com/img/Content/avatar/avatar1.png'}}/>
+                 <Text style={styles.name}>
+                  Stylist Name
+                </Text>
                 <Button title="Sign Out" onPress={this.onSignoutPress} />
-              </View>
+            </View>
           </View>
-        );
-      }
-    }
-    
-    const styles = StyleSheet.create({
-      header:{
-        backgroundColor: "#DCDCDC",
-      },
-      headerContent:{
-        padding:30,
-        alignItems: 'center',
-      },
-      avatar: {
-        width: 130,
-        height: 130,
-        borderRadius: 63,
-        borderWidth: 4,
-        borderColor: "white",
-        marginBottom:10,
-      },
-      name:{
-        fontSize:22,
-        color:"#000000",
-        fontWeight:'600',
-      },
-      userInfo:{
-        fontSize:16,
-        color:"#778899",
-        fontWeight:'600',
-      },
-      body:{
-        backgroundColor: "#778899",
-        height:500,
-        alignItems:'center',
-      },
-      item:{
-        flexDirection : 'row',
-      },
-      infoContent:{
-        flex:1,
-        alignItems:'flex-start',
-        paddingLeft:5
-      },
-      iconContent:{
-        flex:1,
-        alignItems:'flex-end',
-        paddingRight:5,
-      },
-      icon:{
-        width:30,
-        height:30,
-        marginTop:20,
-      },
-      info:{
-        fontSize:18,
-        marginTop:20,
-        color: "#FFFFFF",
-      }
-    });
-
-
-
-
+           <View style={styles.body}>
+            <View style={styles.bodyContent}>
+                <View style={styles.menuBox}>
+                  <Image style={styles.icon} source={{uri: 'https://png.icons8.com/android/50/000000/calendar.png'}}/>
+                  <Text style={styles.info}>Calendar</Text>
+                </View>
+                <TouchableOpacity onPress={()=> {this.props.navigation.navigate('ClientList')}}>
+                  <View style={styles.menuBox}>
+                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/groups.png'}}/>
+                    <Text style={styles.info}>Clients</Text>
+                  </View>
+                </TouchableOpacity>
+               <View style={styles.menuBox}>
+                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/communication.png'}}/>
+                <Text style={styles.info}>Messages</Text>
+              </View>
+               <View style={styles.menuBox}>
+                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/delivery-time.png'}}/>
+                <Text style={styles.info}>Stopwatch</Text>
+              </View>
+               <View style={styles.menuBox}>
+                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/spiral-bound-booklet.png'}}/>
+                <Text style={styles.info}>Notes</Text>
+              </View>
+               <View style={styles.menuBox}>
+                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/statistics.png'}}/>
+                <Text style={styles.info}>Reports</Text>
+              </View>
+               <View style={styles.menuBox}>
+                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/paypal.png'}}/>
+                <Text style={styles.info}>Payment</Text>
+              </View>
+               <View style={styles.menuBox}>
+                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/stack-of-photos.png'}}/>
+                <Text style={styles.info}>Portfolio</Text>
+              </View>
+               <View style={styles.menuBox}>
+                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/user-settings.png'}}/>
+                <Text style={styles.info}>Settings</Text>
+              </View>
+             </View>
+        </View>
+      </ScrollView>
+    );
+  }
+}
+ const styles = StyleSheet.create({
+  header:{
+    backgroundColor: "#00BFFF",
+  },
+  headerContent:{
+    padding:30,
+    alignItems: 'center',
+  },
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom:10,
+  },
+  name:{
+    fontSize:22,
+    color:"#FFFFFF",
+    fontWeight:'600',
+  },
+  bodyContent: {
+    flex: 1,
+    alignItems: 'center',
+    padding:30,
+  },
+  textInfo:{
+    fontSize:18,
+    marginTop:20,
+    color: "#696969",
+  },
+  bodyContent:{
+    paddingTop:40,
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  menuBox:{
+    backgroundColor: "#DCDCDC",
+    width:100,
+    height:100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin:12,
+    shadowColor: 'black',
+    shadowOpacity: .2,
+    shadowOffset: {
+      height:2,
+      width:-2
+    },
+    elevation:4,
+  },
+  icon: {
+    width:60,
+    height:60,
+  },
+  info:{
+    fontSize:16,
+    color: "#696969",
+  }
+});
