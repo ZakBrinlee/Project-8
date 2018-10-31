@@ -6,7 +6,6 @@ import RootNavigation from './navigation/RootNavigation';
 import MainTabNavigator from './navigation/MainTabNavigator';
 import ApiKeys from './constants/ApiKeys';
 import * as firebase from 'firebase';
-import { ColdObservable } from 'rxjs/testing/ColdObservable';
 import ClientHomeScreen from './navigation/MainTabNavigator';
 import RootNavigator from './navigation/RootNavigation';
 import Check from './navigation/RootNavigation';
