@@ -112,6 +112,16 @@ export default class ClientHomeScreen extends React.Component {
                     <Text style={styles.info}>Something</Text>
                   </View>
                 </View>
+            
+            <View style={styles.item}>
+                  <View style={styles.iconContent}>
+                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/windows/50/ffffff/icons8-male-user-50'}}/>
+                  </View>
+                  <View style={styles.infoContent}>
+                    <Text style={styles.info}>Update Profile</Text>
+                  </View>
+                </View>
+            
                 <Button title="Sign Out" onPress={this.onSignoutPress} />
               </View>
           </ScrollView>
