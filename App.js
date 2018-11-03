@@ -6,6 +6,10 @@ import RootNavigation from './navigation/RootNavigation';
 import MainTabNavigator from './navigation/MainTabNavigator';
 import ApiKeys from './constants/ApiKeys';
 import * as firebase from 'firebase';
+import ClientHomeScreen from './navigation/MainTabNavigator';
+import RootNavigator from './navigation/RootNavigation';
+import Check from './navigation/RootNavigation';
+import { AsyncStorage } from "react-native"
 
 export default class App extends React.Component {
   
@@ -15,8 +19,10 @@ export default class App extends React.Component {
       isLoadingComplete: false,
       isAuthenticationReady: false,
       isAuthenticated: false,
+      role: "",
     };
 
+    console.disableYellowBox = true;
     // Initialize firebase...
     if (!firebase.apps.length) { firebase.initializeApp(ApiKeys.FirebaseConfig); }
     firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
@@ -25,7 +31,25 @@ export default class App extends React.Component {
   onAuthStateChanged = (user) => {
     this.setState({isAuthenticationReady: true});
     this.setState({isAuthenticated: !!user});
+
+    //This will pull the role that is tied to the UID
+    if (user != null){
+    var itemsRef = firebase.database().ref('/UsersList/' + user.uid);
+      itemsRef.once('value').then(snapshot => {
+        this.setState({ role: snapshot.child("role").val() });
+        console.log("App.js User Role from DB: " + this.state.role);
+      });         
+    }
+
+    this.persistData();
+
   }
+
+  persistData() {
+    let persistRole = this.state.role;
+    AsyncStorage.setItem('userRole', persistRole)
+  }
+
 
   render() {
     if ( (!this.state.isLoadingComplete || !this.state.isAuthenticationReady) && !this.props.skipLoadingScreen) {
@@ -41,7 +65,8 @@ export default class App extends React.Component {
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-          {(this.state.isAuthenticated) ? <MainTabNavigator /> : <RootNavigation />}
+          {(this.state.isAuthenticated) ? <MainTabNavigator /> : <RootNavigator />}
+
         </View>
       );
     }

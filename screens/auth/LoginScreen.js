@@ -13,8 +13,8 @@ export default class LoginScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            email: "",
-            password: "",
+            email: "test@test.com",
+            password: "testtest",
         };
     }
 
@@ -54,9 +54,9 @@ export default class LoginScreen extends React.Component {
                 </View>
 
                 <View style={styles.box2}>
-                    <Text style={styles.box2_text1}>PASSION FOR STYLE</Text>
+                    <Text style={styles.box2_text1}>A Space to Create</Text>
                     <Text style={styles.box2_text2}>&</Text>
-                    <Text style={styles.box2_text3}>LIFE-LONG CLIENTS.</Text>
+                    <Text style={styles.box2_text3}>Visualize Style</Text>
                 </View>
             
                 <View style={styles.loginbox}>
@@ -105,12 +105,8 @@ export default class LoginScreen extends React.Component {
                         
                     </TouchableOpacity>
                 </View> 
-                    
                 
-                   
-                
-                
-            </View>{/*end of container*/}
+            </View>//finish for the biggest view
         );
     }
 }
@@ -174,7 +170,7 @@ const styles = StyleSheet.create({
 
     loginbox:{
         flex:0.25,
-        paddingTop:20, 
+        paddingTop:15, 
         alignItems:"center",
     },
 
