@@ -106,7 +106,11 @@ export default class LoginScreen extends React.Component {
                     </TouchableOpacity>
                 </View> 
                 
+<<<<<<< HEAD
             </View>//finish for the biggest view
+=======
+            </View>
+>>>>>>> 6c78d52e756e0544c1a1005d2e26c54e95e3d872
         );
     }
 }
