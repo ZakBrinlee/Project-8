@@ -1,10 +1,12 @@
-
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,Image,Button,ScrollView} from 'react-native';
+import {StyleSheet,Text,View,Image,Button,ScrollView,TouchableOpacity} from 'react-native';
 import * as firebase from 'firebase';
 import { AsyncStorage } from "react-native"
 
 export default class ClientHomeScreen extends React.Component {
+   static navigationOptions = {
+        header: null
+    }//remove the default header
 
    constructor(props) {
        super(props);
@@ -62,7 +64,7 @@ export default class ClientHomeScreen extends React.Component {
 
       render() {
         return (
-          <ScrollView style={styles.container}>
+          <View style={styles.container}>
               <View style={styles.header}>
                 <View style={styles.headerContent}>
                     <Image style={styles.avatar}
@@ -76,52 +78,68 @@ export default class ClientHomeScreen extends React.Component {
                 </View>
               </View>
     
-              <View style={styles.body}>
-                <View style={styles.item}>
-                  <View style={styles.iconContent}>
-                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/home/win8/50/ffffff'}}/>
+              <ScrollView style={styles.body}>
+                <View style={styles.bodyContent}>
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/2952/user-male'}}/>
+                      <Text style={styles.info}>Profile</Text>
+                    </TouchableOpacity>
                   </View>
-                  <View style={styles.infoContent}>
-                    <Text style={styles.info}>Home</Text>
+                 
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/63/secured-letter'}}/>
+                      <Text style={styles.info}>Chat</Text>
+                    </TouchableOpacity>
                   </View>
-                </View>
-    
-                <View style={styles.item}>
-                  <View style={styles.iconContent}>
-                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/settings/win8/50/ffffff'}}/>
+
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/23/calendar'}}/>
+                      <Text style={styles.info}>Date</Text>
+                    </TouchableOpacity>
                   </View>
-                  <View style={styles.infoContent}>
-                    <Text style={styles.info}>Settings</Text>
+
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/532/news'}}/>
+                      <Text style={styles.info}>History</Text>
+                    </TouchableOpacity>
                   </View>
-                </View>
-    
-                <View style={styles.item}>
-                  <View style={styles.iconContent}>
-                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/news/win8/50/ffffff'}}/>
+
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/3096/menu'}}/>
+                      <Text style={styles.info}>Service</Text>
+                    </TouchableOpacity>
                   </View>
-                  <View style={styles.infoContent}>
-                    <Text style={styles.info}>News</Text>
+
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/364/settings'}}/>
+                      <Text style={styles.info}>Setting</Text>
+                    </TouchableOpacity>
                   </View>
-                </View>
-    
-                <View style={styles.item} onPress={this.onSignoutPress}>
-                  <View style={styles.iconContent}>
-                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/shopping-basket/ios11/50/ffffff'}}/>
+
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity onPress={this.onSignoutPress}>
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/46/delete'}}/>
+                      <Text style={styles.info}>SignOut</Text>
+                    </TouchableOpacity>
                   </View>
-                  <View style={styles.infoContent}>
-                    <Text style={styles.info}>Something</Text>
-                  </View>
-                </View>
-                <Button title="Sign Out" onPress={this.onSignoutPress} />
+
+              
               </View>
-          </ScrollView>
+              </ScrollView>
+          </View>
         );
       }
     }
     
     const styles = StyleSheet.create({
       header:{
-        backgroundColor: "#DCDCDC",
+        backgroundColor: "#33FFC1",
       },
       headerContent:{
         padding:30,
@@ -146,33 +164,37 @@ export default class ClientHomeScreen extends React.Component {
         fontWeight:'600',
       },
       body:{
-        backgroundColor: "#778899",
-        height:500,
-        alignItems:'center',
+        backgroundColor: "white",
+        height:310,
+       },
+
+    
+      bodyContent:{
+        paddingTop:20,
+        flexDirection: 'row',
+        flexWrap: 'wrap'
       },
-      item:{
-        flexDirection : 'row',
+
+     menuBox:{
+        backgroundColor: "white",
+        width:100,
+        height:100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin:10,
+        
       },
-      infoContent:{
-        flex:1,
-        alignItems:'flex-start',
-        paddingLeft:5
+
+      icon: {
+        width:60,
+        height:60,
       },
-      iconContent:{
-        flex:1,
-        alignItems:'flex-end',
-        paddingRight:5,
-      },
-      icon:{
-        width:30,
-        height:30,
-        marginTop:20,
-      },
+
       info:{
-        fontSize:18,
-        marginTop:20,
-        color: "#FFFFFF",
+        fontSize:20,
+        color: "#696969",
       }
+     
     });
 
 
