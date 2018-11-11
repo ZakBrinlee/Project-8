@@ -7,6 +7,7 @@ import {
   Image,
   SectionList
 } from 'react-native';
+
  export default class ContactList extends Component {
    constructor(props) {
     super(props);
@@ -41,7 +42,20 @@ import {
         },
       ]
     }
-  }
+  }//end of constructor
+
+  static navigationOptions = ({navigation}) => ({
+    headerTitle: 'My Clients',
+    headerStyle: {
+      backgroundColor: '#33FFC1'
+    },
+    headerTitleStyle: {
+      color: '#FFF'
+    }
+  });
+
+
+
    render() {
     return (
       <View style={styles.container}>

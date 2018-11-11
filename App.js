@@ -2,15 +2,15 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import RootNavigation from './navigation/RootNavigation';
 import MainTabNavigator from './navigation/MainTabNavigator';
 import ApiKeys from './constants/ApiKeys';
 import * as firebase from 'firebase';
-import { ColdObservable } from 'rxjs/testing/ColdObservable';
 import ClientHomeScreen from './navigation/MainTabNavigator';
 import RootNavigator from './navigation/RootNavigation';
-import Check from './navigation/RootNavigation';
+//import RootNavigator from './Root';
+import Root from './Root';
 import { AsyncStorage } from "react-native"
+
 
 export default class App extends React.Component {
   
@@ -66,7 +66,7 @@ export default class App extends React.Component {
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-          {(this.state.isAuthenticated) ? <MainTabNavigator /> : <RootNavigator />}
+          {(this.state.isAuthenticated) ?  <Root /> : <RootNavigator />}
 
         </View>
       );

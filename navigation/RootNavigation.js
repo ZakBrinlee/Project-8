@@ -1,40 +1,69 @@
 import { Notifications } from 'expo';
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
-import MainTabNavigator from './MainTabNavigator';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
+import Icon from 'react-native-vector-icons/Ionicons';
 
+//Screen imports
 import LoginScreen from './../screens/auth/LoginScreen';
 import SignupScreen from './../screens/auth/SignupScreen';
 import ForgotPasswordScreen from './../screens/auth/ForgotPasswordScreen';
+import ClientList from './../screens/stylist/ClientList';
+import ClientHomeScreen from '../screens/client/ClientHome';
+import StylistHomeScreen from '../screens/stylist/StylistHome';
 
+//Zak's ongoing test work
 const RootStackNavigator = StackNavigator(
   {
-    Login: { screen: LoginScreen },
-    Signup: { screen: SignupScreen },
-    ForgotPassword: { screen: ForgotPasswordScreen },
-
-    Main: { screen: MainTabNavigator, },
+    LoginScreen: {
+      screen: LoginScreen,
+      // navigationOptions: {
+      //   tabBarLabel: 'Login',
+      //   tabBarIcon: ({ tintColor}) => (
+      //     <Icon name="md-log-in" size={24} />
+      //   )
+      // }
+    },
+    SignupScreen: {
+      screen: SignupScreen,
+      // navigationOptions: {
+      //   tabBarLabel: 'Signup',
+      //   tabBarIcon: ({ tintColor}) => (
+      //     <Icon name="md-create" size={24} />
+      //   )
+      // }
+    },
+    ForgotPasswordScreen: {
+      screen: ForgotPasswordScreen,
+      // navigationOptions: {
+      //   tabBarLabel: 'Forgot Password',
+      //   tabBarIcon: ({ tintColor}) => (
+      //     <Icon name="md-unlock" size={24} />
+      //   )
+      // }
+    } 
   },
-  {
-    navigationOptions: () => ({
-      headerTitleStyle: {
-        fontWeight: 'normal',
-      },
-    }),
-  }
+  { 
+    initialRouteName: 'LoginScreen'
+  },
+  // {
+  //   tabBarComponent: TabBarBottom,
+  //   tabBarPosition: 'bottom',
+  //   animationEnabled: true,
+  //   swipeEnabled: true,
+  // }
 );
 
-const getUserRole = async () => {
-  let role = 'test';
-  try {
-    role = await AsyncStorage.getItem('role') || 'none';
-  } catch (error) {
-    // Error retrieving data
-    console.log(error.message);
-  }
-  return role;
-}
+// const getUserRole = async () => {
+//   let role = 'test';
+//   try {
+//     role = await AsyncStorage.getItem('role') || 'none';
+//   } catch (error) {
+//     // Error retrieving data
+//     console.log(error.message);
+//   }
+//   return role;
+// }
 
 export default class RootNavigator extends React.Component {
 
