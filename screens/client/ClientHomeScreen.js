@@ -64,7 +64,7 @@ export default class ClientHomeScreen extends React.Component {
 
       render() {
         return (
-          <View style={styles.container}>
+          <ScrollView style={styles.container}>
               <View style={styles.header}>
                 <View style={styles.headerContent}>
                     <Image style={styles.avatar}
@@ -74,11 +74,11 @@ export default class ClientHomeScreen extends React.Component {
                     <Text style={styles.userInfo}>{this.state.userEmail}</Text>
                     <Text style={styles.userInfo}>From DB Role: {this.state.role}</Text>
                     <Text style={styles.userInfo}>From ASYNC Role: {this.state.asyncRole}</Text>
-                    
+                    <Button title="Sign Out" onPress={this.onSignoutPress} />
                 </View>
               </View>
     
-              <ScrollView style={styles.body}>
+              <View style={styles.body}>
                 <View style={styles.bodyContent}>
                   <View style={styles.menuBox}>
                     <TouchableOpacity >
@@ -131,8 +131,8 @@ export default class ClientHomeScreen extends React.Component {
 
               
               </View>
-              </ScrollView>
-          </View>
+              </View>
+          </ScrollView>
         );
       }
     }
