@@ -6,9 +6,15 @@ import * as firebase from 'firebase';
 
 export default class LoginScreen extends React.Component {
 
-    static navigationOptions = {
-        header: null
-    }//remove the default header
+    // static navigationOptions = ({navigation}) => ({
+    //     headerTitle: 'Login',
+    //     headerStyle: {
+    //       backgroundColor: '#333'
+    //     },
+    //     headerTitleStyle: {
+    //       color: '#FFF'
+    //     }
+    //   });
 
     constructor(props) {
         super(props);
@@ -16,6 +22,7 @@ export default class LoginScreen extends React.Component {
             email: "test@test.com",
             password: "testtest",
         };
+        this.renderItem = this.renderItem.bind(this);
     }
 
     
@@ -28,7 +35,7 @@ export default class LoginScreen extends React.Component {
     onCreateAccountPress = () => {
         var navActions = NavigationActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({routeName: "Signup"})]
+            actions: [NavigationActions.navigate({routeName: "SignupScreen"})]
         });
         this.props.navigation.dispatch(navActions);
     }
@@ -36,12 +43,24 @@ export default class LoginScreen extends React.Component {
     onForgotPasswordPress = () => {
         var navActions = NavigationActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({routeName: "ForgotPassword"})]
+            actions: [NavigationActions.navigate({routeName: "ForgotPasswordScreen"})]
         });
         this.props.navigation.dispatch(navActions);
     }
 
+    renderItem = ({item}) => {
+        const { navigate } = this.props.navigation;
+        return (
+          <TouchableHighlight key={item.key} underlayColor="#ccc" onPress={() => {
+            navigate('Signup');
+          }} style={styles.list_item}>
+            <Text key={item.key}>{item.name}</Text>
+          </TouchableHighlight>
+        );
+      }
+
     render() {
+        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <View style={styles.box1}>
