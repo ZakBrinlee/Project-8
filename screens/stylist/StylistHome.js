@@ -9,14 +9,30 @@ import {
   Button,
 } from 'react-native';
 import * as firebase from 'firebase';
- export default class ProfileIconsView extends Component {
+import { NavigationActions } from 'react-navigation';
+import RootStackNavigator from '../../navigation/RootNavigation';
+
+
+ export default class StylistHome extends React.Component {
+
+  static navigationOptions = ({navigation}) => ({
+    headerTitle: 'Stylist Home',
+    headerStyle: {
+      backgroundColor: '#33FFC1'
+    },
+    headerTitleStyle: {
+      color: '#FFF'
+    }
+  });
 
   onSignoutPress = () => {
     firebase.auth().signOut();
+    console.log("StylistHomeScreen Signout pressed")
     //AsyncStorage.clear();
   }
 
    render() {
+    const { navigate } = this.props.navigation;
     return (
       <ScrollView style={styles.container}>
           <View style={styles.header}>
@@ -31,16 +47,18 @@ import * as firebase from 'firebase';
           </View>
            <View style={styles.body}>
             <View style={styles.bodyContent}>
+              <TouchableOpacity onPress = {() => {navigate('StylistRecords')}}>
                 <View style={styles.menuBox}>
-                  <Image style={styles.icon} source={{uri: 'https://png.icons8.com/android/50/000000/calendar.png'}}/>
-                  <Text style={styles.info}>Calendar</Text>
+                  <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/statistics.png'}}/>
+                  <Text style={styles.info}>Reports</Text>
                 </View>
-                <TouchableOpacity onPress={()=> {this.props.navigation.navigate('ClientList')}}>
-                  <View style={styles.menuBox}>
-                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/groups.png'}}/>
-                    <Text style={styles.info}>Clients</Text>
-                  </View>
-                </TouchableOpacity>
+              </TouchableOpacity>
+              <TouchableOpacity onPress = {() => {navigate('ClientList')}}>
+                <View style={styles.menuBox}>
+                  <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/groups.png'}}/>
+                  <Text style={styles.info}>Clients</Text>
+                </View>
+              </TouchableOpacity>
                <View style={styles.menuBox}>
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/communication.png'}}/>
                 <Text style={styles.info}>Messages</Text>
@@ -52,10 +70,6 @@ import * as firebase from 'firebase';
                <View style={styles.menuBox}>
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/spiral-bound-booklet.png'}}/>
                 <Text style={styles.info}>Notes</Text>
-              </View>
-               <View style={styles.menuBox}>
-                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/statistics.png'}}/>
-                <Text style={styles.info}>Reports</Text>
               </View>
                <View style={styles.menuBox}>
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/paypal.png'}}/>

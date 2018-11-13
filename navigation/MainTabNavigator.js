@@ -1,29 +1,15 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 import TestScreen from '../screens/TestScreen';
-import ClientHomeScreen from '../screens/client/ClientHomeScreen';
-import StylistHomeScreen from '../screens/stylist/StylistHomeScreen';
+import ClientHomeScreen from '../screens/client/ClientHome';
+import StylistHomeScreen from '../screens/stylist/StylistHome';
+import ClientList from '../screens/stylist/ClientList';
 
-// const ClientPath =  TabNavigator({
-//   Client : {
-//     screen: ClientHomeScreen,
-//   }
-// });
 
-// const StylistPath =  TabNavigator({
-//   Stylist: {
-//     screen: StylistHomeScreen,
-//   }
-// });
-
-// // here's the key to handle which account is logged
-// export const Check = SwitchNavigator({
-//   Client: ClientPath,
-//   Stylist: StylistPath
-// })
 export default TabNavigator(
   {
     Test: {
@@ -60,6 +46,63 @@ export default TabNavigator(
     swipeEnabled: false,
   }
 );
+
+// export default TabNavigator(
+//   {
+//     Client: {
+//       screen: ClientHomeScreen,
+//       navigationOptions: {
+//         tabBarLabel: 'Client Home',
+//         tabBarIcon: ({ tintColor}) => (
+//           <Icon name="ios-home" size={24} />
+//         )
+//       }
+//     },
+//     Stylist: {
+//       screen: StylistHomeScreen,
+//       navigationOptions: {
+//         tabBarLabel: 'Stylist Home',
+//         tabBarIcon: ({ tintColor}) => (
+//           <Icon name="ios-home" size={24} />
+//         )
+//       }
+//     },
+//     ClientList: {
+//       screen: ClientList,
+//       tabBarOptions: {
+//         showLabel: false,
+//       }
+//     } 
+//   },
+//   {
+//     navigationOptions: ({ navigation }) => ({
+//       tabBarIcon: ({ focused }) => {
+//         const { routeName } = navigation.state;
+//         let iconName;
+//         switch (routeName) {
+//           case 'Sign Out':
+//             iconName =
+//               Platform.OS === 'ios'
+//                 ? `ios-information-circle${focused ? '' : '-outline'}`
+//                 : 'md-information-circle';
+//             break;
+//         }
+//         return (
+//           <Ionicons
+//             name={iconName}
+//             size={28}
+//             style={{ marginBottom: -3 }}
+//             color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+//           />
+//         );
+//       },
+//     }),
+//     tabBarComponent: TabBarBottom,
+//     tabBarPosition: 'bottom',
+//     animationEnabled: true,
+//     swipeEnabled: true,
+//   }
+// );
 
 
 

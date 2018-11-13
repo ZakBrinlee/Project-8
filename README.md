@@ -1,8 +1,9 @@
 # Project-8
-NSC - Application Development Practicum for Privyd
 
-Project 8 is an mobile application designed to help hair stylists and clients have a platform for communication. The app will also utitlize multiple features unique to both clients and stylists.  
+This branch is my in development branch for navigation between users. 
 
+Following some of the following tutorials:
 
-Clone repo, in command prompt enter 'npm install' 
-Once completed run 'yarn start' 
+https://blog.pusher.com/getting-started-react-native-part-2/
+
+https://www.skcript.com/svr/getting-smart-with-react-navigation/

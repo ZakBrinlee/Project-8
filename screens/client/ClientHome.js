@@ -4,8 +4,8 @@ import {StyleSheet,Text,View,Image,Button,ScrollView} from 'react-native';
 import * as firebase from 'firebase';
 import { AsyncStorage } from "react-native"
 
-export default class ClientHomeScreen extends React.Component {
-
+export default class ClientHome extends React.Component {
+  
    constructor(props) {
        super(props);
        this.state = {
@@ -52,13 +52,10 @@ export default class ClientHomeScreen extends React.Component {
       console.log("asyncRole: " + this.state.asyncRole)
     }
 
-    
-    
     onSignoutPress = () => {
         firebase.auth().signOut();
         AsyncStorage.clear();
       }
-
 
       render() {
         return (
