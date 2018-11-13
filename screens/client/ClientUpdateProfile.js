@@ -4,8 +4,8 @@ import {StyleSheet,Text,View,Image,Button,ScrollView} from 'react-native';
 import * as firebase from 'firebase';
 import { AsyncStorage } from "react-native"
 
-export default class ClientHome extends React.Component {
-  
+export default class ClientHomeScreen extends React.Component {
+
    constructor(props) {
        super(props);
        this.state = {
@@ -52,10 +52,13 @@ export default class ClientHome extends React.Component {
       console.log("asyncRole: " + this.state.asyncRole)
     }
 
+    
+    
     onSignoutPress = () => {
         firebase.auth().signOut();
         AsyncStorage.clear();
       }
+
 
       render() {
         return (
@@ -109,16 +112,6 @@ export default class ClientHome extends React.Component {
                     <Text style={styles.info}>Something</Text>
                   </View>
                 </View>
-            
-            <View style={styles.item}>
-                  <View style={styles.iconContent}>
-                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/windows/50/ffffff/icons8-male-user-50'}}/>
-                  </View>
-                  <View style={styles.infoContent}>
-                    <Text style={styles.info}>Update Profile</Text>
-                  </View>
-                </View>
-            
                 <Button title="Sign Out" onPress={this.onSignoutPress} />
               </View>
           </ScrollView>
