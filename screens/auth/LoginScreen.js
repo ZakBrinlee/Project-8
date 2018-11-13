@@ -125,7 +125,7 @@ export default class LoginScreen extends React.Component {
                     </TouchableOpacity>
                 </View> 
                 
-            </View>//finish for the biggest view
+            </View>
         );
     }
 }

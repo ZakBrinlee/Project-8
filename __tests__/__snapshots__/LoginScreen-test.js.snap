@@ -1,0 +1,278 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "white",
+      "flex": 1,
+      "paddingTop": 6,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "white",
+        "flex": 0.25,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "testUri": "../../../screens/auth/logo.png",
+        }
+      }
+      style={
+        Object {
+          "height": 87,
+          "width": 85,
+        }
+      }
+    />
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#B8AA64",
+          "fontSize": 28,
+          "fontWeight": "600",
+          "paddingRight": 5,
+          "textAlign": "right",
+        }
+      }
+    >
+      WELCOME TO PRIVYD
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#33FFC1",
+        "flex": 0.35,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 35,
+          "fontWeight": "600",
+          "padding": 5,
+        }
+      }
+    >
+      A Space to Create
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 38,
+          "fontWeight": "600",
+          "padding": 5,
+          "textAlign": "center",
+        }
+      }
+    >
+      &
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 35,
+          "fontWeight": "600",
+          "padding": 5,
+          "textAlign": "right",
+        }
+      }
+    >
+      Visualize Style
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 0.25,
+        "paddingTop": 15,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "gray",
+          "fontSize": 20,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Login
+    </Text>
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      autoCorrect={false}
+      keyboardType="email-address"
+      onChangeText={[Function]}
+      placeholder="Email"
+      style={
+        Object {
+          "borderWidth": 0,
+          "height": 50,
+          "width": 250,
+        }
+      }
+      value="test@test.com"
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      autoCorrect={false}
+      onChangeText={[Function]}
+      placeholder="Password"
+      secureTextEntry={true}
+      style={
+        Object {
+          "borderWidth": 0,
+          "height": 50,
+          "width": 250,
+        }
+      }
+      value="testtest"
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 0.1,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#D6FAEA",
+          "borderRadius": 9,
+          "height": 40,
+          "justifyContent": "center",
+          "opacity": 1,
+          "width": 180,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        Login
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 0.1,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#D6FAEA",
+          "borderRadius": 9,
+          "height": 40,
+          "justifyContent": "center",
+          "opacity": 1,
+          "width": 180,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        Sign Up
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 0.1,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#D6FAEA",
+          "borderRadius": 9,
+          "height": 40,
+          "justifyContent": "center",
+          "opacity": 1,
+          "width": 180,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        Forgot Password
+      </Text>
+    </View>
+  </View>
+</View>
+`;
