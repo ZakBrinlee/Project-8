@@ -63,7 +63,6 @@ export default class ClientHome extends React.Component {
 
 
       render() {
-        const { navigate } = this.props.navigation;
         return (
           <ScrollView style={styles.container}>
               <View style={styles.header}>
@@ -77,69 +76,10 @@ export default class ClientHome extends React.Component {
                     <Text style={styles.userInfo}>From ASYNC Role: {this.state.asyncRole}</Text>
                     
                 </View>
+                <Text style={styles.name}>StyleMemoTM Page</Text>
+
               </View>
     
-              <View style={styles.body}>
-                <View style={styles.bodyContent}>
-                  <View style={styles.menuBox}>
-                    <TouchableOpacity >
-                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/2952/user-male'}}/>
-                      <Text style={styles.info}>Profile</Text>
-                    </TouchableOpacity>
-                  </View>
-                 
-                  <View style={styles.menuBox}>
-                    <TouchableOpacity >
-                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/63/secured-letter'}}/>
-                      <Text style={styles.info}>Chat</Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={styles.menuBox}>
-                    <TouchableOpacity >
-                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/23/calendar'}}/>
-                      <Text style={styles.info}>Date</Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={styles.menuBox}>
-                    <TouchableOpacity >
-                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/532/news'}}/>
-                      <Text style={styles.info}>History</Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={styles.menuBox}>
-                    <TouchableOpacity >
-                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/3096/menu'}}/>
-                      <Text style={styles.info}>Service</Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={styles.menuBox}>
-                    <TouchableOpacity >
-                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/364/settings'}}/>
-                      <Text style={styles.info}>Setting</Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={styles.menuBox}>
-                    <TouchableOpacity onPress={this.onSignoutPress}>
-                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/46/delete'}}/>
-                      <Text style={styles.info}>SignOut</Text>
-                    </TouchableOpacity>
-                            </View>
-                  <View style={styles.menuBox}>
-                    <TouchableOpacity onPress = {() => {navigate('StyleMemo')}}>
-                      <Image style={styles.icon} source={{uri: 'https://img.icons8.com/material-outlined/40/000000/unsplash.png'}}/>
-                      <Text style={styles.info}>StyleMemo</Text>
-                    </TouchableOpacity>
-                            </View>
-
-
-              
-              </View>
-              </View>
           </ScrollView>
         );
       }

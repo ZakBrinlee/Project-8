@@ -6,6 +6,8 @@ import * as firebase from 'firebase';
 
 import ClientList from './screens/stylist/ClientList';
 import ClientHomeScreen from './screens/client/ClientHome';
+import ClientProfile from './screens/client/ClientUpdateProfile';
+import ClientStyleMemo from './screens/client/StyleMemo';
 import StylistHomeScreen from './screens/stylist/StylistHome';
 import StylistRecordScreen from './screens/stylist/StylistRecords';
   
@@ -13,7 +15,13 @@ import StylistRecordScreen from './screens/stylist/StylistRecords';
     {
       ClientHomeScreen: {
         screen: ClientHomeScreen
-      }
+      },
+      ClientProfile: {
+        screen: ClientProfile
+      },
+      StyleMemo: {
+        screen: ClientStyleMemo
+      },
     },
     {
       initialRouteName: 'ClientHomeScreen',
