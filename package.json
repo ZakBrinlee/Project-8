@@ -1,5 +1,5 @@
 {
-"main": "node_modules/expo/AppEntry.js",
+  "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
     "start": "react-native-scripts start",
@@ -19,7 +19,9 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
     "react-native-switch-selector": "^1.1.8",
     "react-navigation": "^1.0.0-beta.27",
-    "react-scripts": "^2.0.4"
+    "react-scripts": "^2.0.4",
+    "sendbird": "^3.0.88",
+    "tcomb-form-native": "^0.6.20"
   },
   "devDependencies": {
     "jest-expo": "^25.0.0",

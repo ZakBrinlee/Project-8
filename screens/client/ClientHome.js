@@ -63,6 +63,7 @@ export default class ClientHome extends React.Component {
 
 
       render() {
+        const { navigate } = this.props.navigation;
         return (
           <ScrollView style={styles.container}>
               <View style={styles.header}>
@@ -81,7 +82,7 @@ export default class ClientHome extends React.Component {
               <View style={styles.body}>
                 <View style={styles.bodyContent}>
                   <View style={styles.menuBox}>
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress = {() => {navigate('ClientProfile')}}>
                       <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/2952/user-male'}}/>
                       <Text style={styles.info}>Profile</Text>
                     </TouchableOpacity>

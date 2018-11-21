@@ -5,6 +5,7 @@ import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
 import SwitchSelector from 'react-native-switch-selector';//for toggle selector
 import ApiKeys from '../../constants/ApiKeys.js';
+import SendBird from 'sendbird';
 
 //Used this tutorial for toggle switch https://github.com/App2Sales/react-native-switch-selector
 
@@ -22,6 +23,7 @@ export default class SignupScreen extends React.Component {
             password: "testtest",
             passwordConfirm: "testtest",
             role: "client",
+            nickname: "",
         };
     }
 
@@ -35,6 +37,29 @@ export default class SignupScreen extends React.Component {
             .then(() => { }, (error) => { Alert.alert(error.message); });
 
         console.log("Just created user");
+
+        //code for SendBird connection and user creation
+        const { email, nickname } = this.state;
+        const sb = new SendBird({ 'appId': '0B7E1CDE-5B22-4850-8BC5-4F1B109CFD91' });
+        sb.connect(email, (user, error) => {
+            if (error) {
+                this.setState({ error });
+            } else {
+                sb.updateCurrentUserInfo(nickname, null, (user, error) => {
+                    if (error) {
+                        this.setState({ error });
+                    } else {
+                        this.setState({
+                            email: '',
+                            nickname: '',
+                            error: ''
+                        }, () => {
+                            console.log("Else statement in onSignUpPress")
+                        });
+                    }
+                })
+            }
+        })
     }
 
     componentDidMount() {
@@ -66,6 +91,14 @@ export default class SignupScreen extends React.Component {
         this.props.navigation.dispatch(navActions);
     }
 
+    _userIdChanged = (userId) => {
+        this.setState({ userId });
+    }
+
+    _nicknameChanged = (nickname) => {
+        this.setState({ nickname });
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -79,6 +112,14 @@ export default class SignupScreen extends React.Component {
                 <View style={styles.signUpbox}>
                     <Text style={styles.signUp}>Signup</Text>
 
+
+                    <TextInput style={styles.textinput}
+                        value={this.state.nickname}
+                        onChangeText={(text) => { this.setState({nickname: text}) }}
+                        placeholder="Name"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
 
                     <TextInput style={styles.textinput}
                         value={this.state.email}

@@ -1,18 +1,23 @@
 import React from 'react';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import { createBottomTabNavigator, TabNavigator, StackNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import ApiKeys from './constants/ApiKeys';
 import * as firebase from 'firebase';
 
 import ClientList from './screens/stylist/ClientList';
 import ClientHomeScreen from './screens/client/ClientHome';
+import ClientProfile from './screens/client/ClientUpdateProfile';
 import StylistHomeScreen from './screens/stylist/StylistHome';
 import StylistRecordScreen from './screens/stylist/StylistRecords';
+import StylistChat from './screens/stylist/StylistChat';
   
   const ClientStack = StackNavigator(
     {
       ClientHomeScreen: {
         screen: ClientHomeScreen
+      },
+      ClientProfile: {
+        screen: ClientProfile
       }
     },
     {
@@ -30,6 +35,9 @@ import StylistRecordScreen from './screens/stylist/StylistRecords';
       },
       StylistRecords: {
         screen: StylistRecordScreen
+      },
+      StylistChat: {
+        screen: StylistChat
       },
     },
     {
@@ -65,6 +73,15 @@ export default TabNavigator(
     initialRouteName: 'StylistStack'
   },
   {
+    tabBarPosition: "bottom",
+    animationEnabled: true,
+    tabBarOptions: {
+      showIcon: true,
+      showLabel: false,
+      style: {
+        backgroundColor: '#333'
+      }
+    },
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
@@ -74,15 +91,7 @@ export default TabNavigator(
         return <MaterialIcons name={iconName} size={35} color={color} />;
       },
     }),
-    tabBarPosition: 'bottom',
-    animationEnabled: true,
-    tabBarOptions: {
-      showIcon: true,
-      showLabel: false,
-      style: {
-        backgroundColor: '#333'
-      }
-    }
+    tabBarPosition: "bottom",    
   },
 );
 

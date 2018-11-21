@@ -11,6 +11,7 @@ import {
 import * as firebase from 'firebase';
 import { NavigationActions } from 'react-navigation';
 import RootStackNavigator from '../../navigation/RootNavigation';
+import SendBird from 'sendbird';
 
 
  export default class StylistHome extends React.Component {
@@ -25,11 +26,19 @@ import RootStackNavigator from '../../navigation/RootNavigation';
     }
   });
 
+
   onSignoutPress = () => {
+    const sb = new SendBird({ 'appId': '0B7E1CDE-5B22-4850-8BC5-4F1B109CFD91' });
     firebase.auth().signOut();
     console.log("StylistHomeScreen Signout pressed")
     //AsyncStorage.clear();
+
+    sb.disconnect(function(){
+      // You are disconnected from SendBird.
+    });
   }
+
+  
 
    render() {
     const { navigate } = this.props.navigation;
@@ -59,10 +68,12 @@ import RootStackNavigator from '../../navigation/RootNavigation';
                   <Text style={styles.info}>Clients</Text>
                 </View>
               </TouchableOpacity>
-               <View style={styles.menuBox}>
-                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/communication.png'}}/>
-                <Text style={styles.info}>Messages</Text>
-              </View>
+              <TouchableOpacity onPress = {() => {navigate('StylistChat')}}>
+                <View style={styles.menuBox}>
+                  <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/communication.png'}}/>
+                  <Text style={styles.info}>Messages</Text>
+                </View>
+                </TouchableOpacity>
                <View style={styles.menuBox}>
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/delivery-time.png'}}/>
                 <Text style={styles.info}>Stopwatch</Text>

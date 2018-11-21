@@ -17,12 +17,6 @@ const RootStackNavigator = StackNavigator(
   {
     LoginScreen: {
       screen: LoginScreen,
-      // navigationOptions: {
-      //   tabBarLabel: 'Login',
-      //   tabBarIcon: ({ tintColor}) => (
-      //     <Icon name="md-log-in" size={24} />
-      //   )
-      // }
     },
     SignupScreen: {
       screen: SignupScreen,
