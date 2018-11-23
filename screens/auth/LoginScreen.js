@@ -3,33 +3,44 @@ import React from 'react';
 import { Platform,StyleSheet, View, Text, TextInput, Button, Alert,Image,TouchableOpacity} from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
+import { connect } from 'react-redux';
+import { sendbirdLogin } from '../../actions';
 
-export default class LoginScreen extends React.Component {
+class LoginScreen extends React.Component {
 
-    // static navigationOptions = ({navigation}) => ({
-    //     headerTitle: 'Login',
-    //     headerStyle: {
-    //       backgroundColor: '#333'
-    //     },
-    //     headerTitleStyle: {
-    //       color: '#FFF'
-    //     }
-    //   });
+    static navigationOptions = { header: null }
 
     constructor(props) {
         super(props);
         this.state = { 
-            email: "test@test.com",
+            userId: "zak@test.com",
             password: "testtest",
+
         };
-        this.renderItem = this.renderItem.bind(this);
+        // this.renderItem = this.renderItem.bind(this);
     }
 
-    
+    componentWillReceiveProps(props) {
+        const { user, error } = props;
+        if (user) {
+            this.setState({ userId: this.state.userId})
+            console.log("Inside componentWillRecieveProps - userId state: " + this.state.userId)
+        }
+    }
 
     onLoginPress = () => {
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+        //code for SendBird connection and user creation
+        const { userId } = this.state;
+        this.props.sendbirdLogin({ userId });
+        console.log("Inside onLoginPress - userId state: " + this.state.userId)
+
+        firebase.auth().signInWithEmailAndPassword(this.state.userId, this.state.password)
             .then(() => { }, (error) => { Alert.alert(error.message); });
+
+    }
+
+    _userIdChanged = (userId) => {
+        this.setState({ userId });
     }
 
     onCreateAccountPress = () => {
@@ -48,16 +59,16 @@ export default class LoginScreen extends React.Component {
         this.props.navigation.dispatch(navActions);
     }
 
-    renderItem = ({item}) => {
-        const { navigate } = this.props.navigation;
-        return (
-          <TouchableHighlight key={item.key} underlayColor="#ccc" onPress={() => {
-            navigate('Signup');
-          }} style={styles.list_item}>
-            <Text key={item.key}>{item.name}</Text>
-          </TouchableHighlight>
-        );
-      }
+    // renderItem = ({item}) => {
+    //     const { navigate } = this.props.navigation;
+    //     return (
+    //       <TouchableHighlight key={item.key} underlayColor="#ccc" onPress={() => {
+    //         navigate('Signup');
+    //       }} style={styles.list_item}>
+    //         <Text key={item.key}>{item.name}</Text>
+    //       </TouchableHighlight>
+    //     );
+    //   }
 
     render() {
         const { navigate } = this.props.navigation;
@@ -81,14 +92,14 @@ export default class LoginScreen extends React.Component {
                 <View style={styles.loginbox}>
 
                     <Text style={styles.login}>Login</Text> 
-
+                    
                     <TextInput style={styles.textinput}
-                        value={this.state.email}
-                        onChangeText={(text) => { this.setState({email: text}) }}
+                        value={this.state.userId}
                         placeholder="Email"
                         keyboardType="email-address"
                         autoCapitalize="none"
                         autoCorrect={false}
+                        onChangeText={this._userIdChanged}
                     />
 
                    
@@ -129,6 +140,11 @@ export default class LoginScreen extends React.Component {
         );
     }
 }
+
+function mapStateToProps({ login }) {
+    const { error, user } = login;
+    return { error, user };
+};
 
 const styles = StyleSheet.create({
 
@@ -225,11 +241,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
     },
+   
     
-
-
-
 });
+
+export default connect(mapStateToProps, { sendbirdLogin })(LoginScreen);
 
 
 

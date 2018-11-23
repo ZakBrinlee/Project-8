@@ -4,13 +4,13 @@ import { StyleSheet, View, Text, TextInput, Button, Alert,TouchableOpacity } fro
 import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
 import SwitchSelector from 'react-native-switch-selector';//for toggle selector
-import ApiKeys from '../../constants/ApiKeys.js';
-import SendBird from 'sendbird';
+import { connect } from 'react-redux';
+import { sendbirdLogin } from '../../actions';
 
 //Used this tutorial for toggle switch https://github.com/App2Sales/react-native-switch-selector
 
 
-export default class SignupScreen extends React.Component {
+class SignupScreen extends React.Component {
 
     static navigationOptions = {
         header: null
@@ -19,12 +19,27 @@ export default class SignupScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            email: "test@test.com",
+            userId: "test@test.com",
             password: "testtest",
             passwordConfirm: "testtest",
             role: "client",
-            nickname: "",
+            nickname: "Test Man",
         };
+    }
+
+    componentWillReceiveProps(props) {
+        const { user, error } = props;
+        if (user) {
+            this.setState({ userId: this.state.userId, nickname: this.state.nickname })
+        }
+    }
+
+    _userIdChanged = (userId) => {
+        this.setState({ userId });
+    }
+
+    _nicknameChanged = (nickname) => {
+        this.setState({ nickname });
     }
 
     onSignupPress = () => {
@@ -33,47 +48,29 @@ export default class SignupScreen extends React.Component {
             return;
         }
 
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        //code for SendBird connection and user creation
+        const { userId, nickname } = this.state;
+        this.props.sendbirdLogin({ userId, nickname });
+
+        firebase.auth().createUserWithEmailAndPassword(this.state.userId, this.state.password)
             .then(() => { }, (error) => { Alert.alert(error.message); });
 
         console.log("Just created user");
-
-        //code for SendBird connection and user creation
-        const { email, nickname } = this.state;
-        const sb = new SendBird({ 'appId': '0B7E1CDE-5B22-4850-8BC5-4F1B109CFD91' });
-        sb.connect(email, (user, error) => {
-            if (error) {
-                this.setState({ error });
-            } else {
-                sb.updateCurrentUserInfo(nickname, null, (user, error) => {
-                    if (error) {
-                        this.setState({ error });
-                    } else {
-                        this.setState({
-                            email: '',
-                            nickname: '',
-                            error: ''
-                        }, () => {
-                            console.log("Else statement in onSignUpPress")
-                        });
-                    }
-                })
-            }
-        })
     }
 
     componentDidMount() {
         firebase.auth().onAuthStateChanged( user => {
             if(user){
-                this.writeUserData(user.uid, user.email, this.state.role);
+                this.writeUserData(user.uid, user.email, this.state.role, this.state.nickname);
             }
         })
     }
 
-    writeUserData(userID, email, role = this.state.role){
+    writeUserData(userID, email, role = this.state.role, name = this.state.nickname){
         firebase.database().ref('UsersList/' + userID).set({
             email,
-            role
+            role, 
+            name
         }).then((data)=>{
             //success callback
             console.log('data ' , data)
@@ -89,14 +86,6 @@ export default class SignupScreen extends React.Component {
             actions: [NavigationActions.navigate({routeName: "LoginScreen"})]
         });
         this.props.navigation.dispatch(navActions);
-    }
-
-    _userIdChanged = (userId) => {
-        this.setState({ userId });
-    }
-
-    _nicknameChanged = (nickname) => {
-        this.setState({ nickname });
     }
 
     render() {
@@ -115,15 +104,15 @@ export default class SignupScreen extends React.Component {
 
                     <TextInput style={styles.textinput}
                         value={this.state.nickname}
-                        onChangeText={(text) => { this.setState({nickname: text}) }}
+                        onChangeText={this._nicknameChanged}
                         placeholder="Name"
                         autoCapitalize="none"
                         autoCorrect={false}
                     />
 
                     <TextInput style={styles.textinput}
-                        value={this.state.email}
-                        onChangeText={(text) => { this.setState({email: text}) }}
+                        value={this.state.userId}
+                        onChangeText={this._userIdChanged}
                         placeholder="Email"
                         keyboardType="email-address"
                         autoCapitalize="none"
@@ -184,6 +173,11 @@ export default class SignupScreen extends React.Component {
         );
     }
 }
+
+function mapStateToProps({ login }) {
+    const { error, user } = login;
+    return { error, user };
+};
 
 const styles = StyleSheet.create({
 
@@ -274,3 +268,4 @@ const options = [
     { label: 'Stylist', value: 'stylist' }
 ];
 
+export default connect(mapStateToProps, { sendbirdLogin })(SignupScreen);

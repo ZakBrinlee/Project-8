@@ -9,7 +9,7 @@ import ClientHomeScreen from './screens/client/ClientHome';
 import ClientProfile from './screens/client/ClientUpdateProfile';
 import StylistHomeScreen from './screens/stylist/StylistHome';
 import StylistRecordScreen from './screens/stylist/StylistRecords';
-import StylistChat from './screens/stylist/StylistChat';
+
   
   const ClientStack = StackNavigator(
     {
@@ -36,30 +36,15 @@ import StylistChat from './screens/stylist/StylistChat';
       StylistRecords: {
         screen: StylistRecordScreen
       },
-      StylistChat: {
-        screen: StylistChat
-      },
+      // StylistChat: {
+      //   screen: StylistChat
+      // },
     },
     {
       initialRouteName: 'StylistHomeScreen',
     }
   );
  
-
-// const MainStack =  StackNavigator(
-//   {
-//     StylistStack: {
-//       screen: StylistStack
-//     },
-//     ClientStack: {
-//         screen: ClientStack
-//     },
-//   },
-//     {
-//       initialRouteName: 'StylistStack'
-//     },
-// );
-
 export default TabNavigator(
   {
     StylistStack: {

@@ -11,6 +11,9 @@ import RootNavigator from './navigation/RootNavigation';
 import Root from './Root';
 import { AsyncStorage } from "react-native"
 
+import { Provider } from 'react-redux';
+import store from './store';
+
 
 export default class App extends React.Component {
   
@@ -63,12 +66,14 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-          {(this.state.isAuthenticated) ?  <Root /> : <RootNavigator />}
+        <Provider store={store}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+            {(this.state.isAuthenticated) ?  <Root /> : <RootNavigator />}
 
-        </View>
+          </View>
+        </Provider>
       );
     }
   }
