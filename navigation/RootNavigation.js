@@ -8,9 +8,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import LoginScreen from './../screens/auth/LoginScreen';
 import SignupScreen from './../screens/auth/SignupScreen';
 import ForgotPasswordScreen from './../screens/auth/ForgotPasswordScreen';
-import ClientList from './../screens/stylist/ClientList';
-import ClientHomeScreen from '../screens/client/ClientHome';
-import StylistHomeScreen from '../screens/stylist/StylistHome';
 
 //Zak's ongoing test work
 const RootStackNavigator = StackNavigator(
@@ -20,44 +17,17 @@ const RootStackNavigator = StackNavigator(
     },
     SignupScreen: {
       screen: SignupScreen,
-      // navigationOptions: {
-      //   tabBarLabel: 'Signup',
-      //   tabBarIcon: ({ tintColor}) => (
-      //     <Icon name="md-create" size={24} />
-      //   )
-      // }
     },
     ForgotPasswordScreen: {
       screen: ForgotPasswordScreen,
-      // navigationOptions: {
-      //   tabBarLabel: 'Forgot Password',
-      //   tabBarIcon: ({ tintColor}) => (
-      //     <Icon name="md-unlock" size={24} />
-      //   )
-      // }
     } 
   },
   { 
     initialRouteName: 'LoginScreen'
   },
-  // {
-  //   tabBarComponent: TabBarBottom,
-  //   tabBarPosition: 'bottom',
-  //   animationEnabled: true,
-  //   swipeEnabled: true,
-  // }
+
 );
 
-// const getUserRole = async () => {
-//   let role = 'test';
-//   try {
-//     role = await AsyncStorage.getItem('role') || 'none';
-//   } catch (error) {
-//     // Error retrieving data
-//     console.log(error.message);
-//   }
-//   return role;
-// }
 
 export default class RootNavigator extends React.Component {
 

@@ -9,7 +9,7 @@ import ClientHomeScreen from './screens/client/ClientHome';
 import ClientProfile from './screens/client/ClientUpdateProfile';
 import StylistHomeScreen from './screens/stylist/StylistHome';
 import StylistRecordScreen from './screens/stylist/StylistRecords';
-
+import GroupChannel from './screens/stylist/GroupChannel';
   
   const ClientStack = StackNavigator(
     {
@@ -36,9 +36,9 @@ import StylistRecordScreen from './screens/stylist/StylistRecords';
       StylistRecords: {
         screen: StylistRecordScreen
       },
-      // StylistChat: {
-      //   screen: StylistChat
-      // },
+      GroupChannel: {
+        screen: GroupChannel
+      },
     },
     {
       initialRouteName: 'StylistHomeScreen',

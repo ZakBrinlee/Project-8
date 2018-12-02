@@ -68,7 +68,7 @@ import SendBird from 'sendbird';
                   <Text style={styles.info}>Clients</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress = {() => {navigate('StylistChat')}}>
+              <TouchableOpacity onPress = {() => {navigate('GroupChannel')}}>
                 <View style={styles.menuBox}>
                   <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/communication.png'}}/>
                   <Text style={styles.info}>Messages</Text>
