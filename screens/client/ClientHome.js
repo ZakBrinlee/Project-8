@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,Image,Button,ScrollView,TouchableOpacity} from 'react-native';
+import {StyleSheet,Text,View,Image,Button,ScrollView,TouchableOpacity,Alert} from 'react-native';
 import * as firebase from 'firebase';
+import { ImagePicker,Camera, Permissions,Constants } from 'expo';
 import { AsyncStorage } from "react-native"
 
 export default class ClientHome extends React.Component {
+
+  state = {
+    image: null,
+  };
+
    static navigationOptions = {
         header: null
     }//remove the default header
@@ -61,8 +67,58 @@ export default class ClientHome extends React.Component {
         AsyncStorage.clear();
       }
 
+     pickFromGallery = async () => {
+    const permissions = Permissions.CAMERA_ROLL;
+    const { status } = await Permissions.askAsync(permissions);
+
+    console.log(permissions, status);
+    if(status === 'granted') {
+      let image = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        mediaTypes: 'Images',
+      }).catch(error => console.log(permissions, { error }));
+      console.log(permissions, 'SUCCESS', image);
+    }
+  }
+
+  pickFromCamera = async () => {
+    const permissions = Permissions.CAMERA;
+    const { status } = await Permissions.askAsync(permissions);
+
+    console.log(permissions, status);
+    if(status === 'granted') {
+      let image = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        mediaTypes: 'Images',
+      }).catch(error => console.log(permissions, { error }));
+      console.log(permissions, 'SUCCESS', image);
+    }
+  }
+
+    ShowAlertDialog = () =>{
+          Alert.alert(
+          // This is Alert Dialog Title
+          'Upload images',
+
+          // This is Alert Dialog Message. 
+          'Choose images from...',
+        [
+          // First Text Button in Alert Dialog.
+          {text: 'Open Camera', onPress: this.pickFromCamera},
+
+          // Second Cancel Button in Alert Dialog.
+          {text: 'Open Folder', onPress: this.pickFromGallery},
+
+          // Third OK Button in Alert Dialog
+         {text: 'Cancel', onPress: () => console.log('Cancel Button Pressed'), style: 'cancel'},
+       ])
+      }
+
+      
+
 
       render() {
+        let { image } = this.state;
         return (
           <ScrollView style={styles.container}>
               <View style={styles.header}>
@@ -129,6 +185,15 @@ export default class ClientHome extends React.Component {
                     </TouchableOpacity>
                   </View>
 
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity onPress={this.ShowAlertDialog}>
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/5376/camera'}}/>
+                      <Text style={styles.info}>Upload</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  
+
               
               </View>
               </View>
@@ -165,7 +230,7 @@ export default class ClientHome extends React.Component {
       },
       body:{
         backgroundColor: "white",
-        height:310,
+        height:400,
        },
 
     
