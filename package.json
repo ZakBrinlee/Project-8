@@ -1,5 +1,5 @@
 {
-"main": "node_modules/expo/AppEntry.js",
+  "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
     "start": "react-native-scripts start",
@@ -17,6 +17,7 @@
     "firebase": "^5.5.2",
     "react": "16.2.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
+    "react-native-fetch-blob": "^0.10.8",
     "react-native-switch-selector": "^1.1.8",
     "react-navigation": "^1.0.0-beta.27",
     "react-scripts": "^2.0.4"
