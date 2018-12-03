@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Button, Header } from '../../components';
 
 import t from 'tcomb-form-native';
 
@@ -53,10 +54,13 @@ export default class StylistRecords extends Component {
   static navigationOptions = ({navigation}) => ({
     headerTitle: 'Job History',
     headerStyle: {
-      backgroundColor: '#33FFC1'
+      backgroundColor: '#33FFC1',
+      textAlign: 'center'
     },
     headerTitleStyle: {
-      color: '#FFF'
+      color: '#6b52ae', 
+      fontWeight: 'bold',
+      textAlign: 'center'
     }
   });
   

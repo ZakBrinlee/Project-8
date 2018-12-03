@@ -2,18 +2,13 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import MainTabNavigator from './navigation/MainTabNavigator';
 import ApiKeys from './constants/ApiKeys';
 import * as firebase from 'firebase';
-import ClientHomeScreen from './navigation/MainTabNavigator';
 import RootNavigator from './navigation/RootNavigation';
-//import RootNavigator from './Root';
 import Root from './Root';
 import { AsyncStorage } from "react-native"
-
 import { Provider } from 'react-redux';
 import store from './store';
-
 
 export default class App extends React.Component {
   

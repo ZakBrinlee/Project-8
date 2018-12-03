@@ -1,3 +1,8 @@
+export * from './Input';
+export * from './Message';
+export * from './MessageItem';
+export * from './MessageInput';
+export * from './Hr';
 export { 
     Button, 
     Icon, 
@@ -5,5 +10,6 @@ export {
     FormLabel, 
     FormInput, 
     FormValidationMessage,
-    ListItem
+    ListItem,
+    Header
 } from 'react-native-elements';

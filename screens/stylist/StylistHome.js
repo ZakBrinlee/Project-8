@@ -6,12 +6,12 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  Button,
 } from 'react-native';
 import * as firebase from 'firebase';
 import { NavigationActions } from 'react-navigation';
 import RootStackNavigator from '../../navigation/RootNavigation';
 import SendBird from 'sendbird';
+import { Button, Icon } from '../../components';
 
 
  export default class StylistHome extends React.Component {
@@ -19,11 +19,22 @@ import SendBird from 'sendbird';
   static navigationOptions = ({navigation}) => ({
     headerTitle: 'Stylist Home',
     headerStyle: {
-      backgroundColor: '#33FFC1'
+      backgroundColor: '#33FFC1',
+      textAlign: 'center'
     },
     headerTitleStyle: {
-      color: '#FFF'
-    }
+      color: '#6b52ae', 
+      fontWeight: 'bold',
+    },
+    headerRight: (
+      <Icon
+        name='md-log-out'
+        type='ionicon'
+        color='#6b52ae'
+        onPress={() => console.log('hello')}
+        containerStyle ={ marginRight= 15 }
+        />
+    ),
   });
 
 
