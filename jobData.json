@@ -1,0 +1,23 @@
+ [
+  {
+    "customer": "Danielle",
+    "date": "December 5, 2018",
+    "amount": "$100",
+    "time": 1,
+    "notes": "This is just a note"
+  },
+  {
+    "customer": "Zak",
+    "date": "December 8, 2018",
+    "amount": "$50",
+    "time": 0.5,
+    "notes": "This is just a note"
+  },
+  {
+    "customer": "Tyler",
+    "date": "December 10, 2018",
+    "amount": "$100",
+    "time": 1,
+    "notes": "This is just a note"
+  }
+]
