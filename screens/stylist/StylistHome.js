@@ -8,10 +8,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as firebase from 'firebase';
-import { NavigationActions } from 'react-navigation';
-import RootStackNavigator from '../../navigation/RootNavigation';
 import SendBird from 'sendbird';
-import { Button, Icon } from '../../components';
+import { Icon } from '../../components';
+import { AsyncStorage } from "react-native"
 
 const onSignoutPress = () => {
   const sb = new SendBird({ 'appId': '0B7E1CDE-5B22-4850-8BC5-4F1B109CFD91' });
@@ -27,7 +26,7 @@ const onSignoutPress = () => {
  export default class StylistHome extends React.Component {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: 'Stylist Home',
+    headerTitle: 'Home',
     headerStyle: {
       backgroundColor: '#33FFC1',
       height: 45,
@@ -49,6 +48,50 @@ const onSignoutPress = () => {
     ),
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+        name: "",
+        role: "",
+        uid: "",
+        asyncRole: "",
+    };
+}
+  componentDidMount() {
+    this.getUserRole();
+    this.checkPersistData();
+  }
+
+  componentWillMount(){
+    this.checkPersistData();
+  }
+
+  getUserRole() {
+      //console.log("Inside getUserRole");
+      var user = firebase.auth().currentUser;
+      if (user != null){
+          this.setState({uid: user.uid});
+      } else {
+          console.log("Unable to locate current user");
+      }
+
+      //console.log("Inside method userEmail: " + this.state.userEmail);
+      var itemsRef = firebase.database().ref('/UsersList/' + user.uid);
+      itemsRef.once('value').then(snapshot => {
+        this.setState({ role: snapshot.child("role").val() });
+        this.setState({ name: snapshot.child("name").val() });
+        //console.log("User Role from DB: " + this.state.role);
+      });         
+
+  }
+
+  checkPersistData(){
+    console.log("Inside checkPersistData")
+    AsyncStorage.getItem('userRole').then((userRole)=>{
+      this.setState({asyncRole: userRole })
+    })
+    console.log("asyncRole: " + this.state.asyncRole)
+  }
 
    render() {
     const { navigate } = this.props.navigation;
@@ -58,32 +101,45 @@ const onSignoutPress = () => {
             <View style={styles.headerContent}>
                 <Image style={styles.avatar}
                   source={{uri: 'https://bootdey.com/img/Content/avatar/avatar1.png'}}/>
-                 <Text style={styles.name}>
-                  Stylist Name
-                </Text>
-                <Button title="Sign Out" onPress={onSignoutPress} />
+                 <Text style={styles.name}>{this.state.name}</Text>
+                  <Text style={styles.userInfo}>{this.state.role}</Text>
+                {/* <Button title="Sign Out" onPress={onSignoutPress} /> */}
             </View>
           </View>
            <View style={styles.body}>
             <View style={styles.bodyContent}>
+            <View style={styles.menuBox}>
               <TouchableOpacity onPress = {() => {navigate('StylistRecords')}}>
                 <View style={styles.menuBox}>
                   <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/statistics.png'}}/>
                   <Text style={styles.info}>Reports</Text>
                 </View>
               </TouchableOpacity>
+              </View>
+              <View style={styles.menuBox}>
               <TouchableOpacity onPress = {() => {navigate('ClientList')}}>
                 <View style={styles.menuBox}>
                   <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/groups.png'}}/>
                   <Text style={styles.info}>Clients</Text>
                 </View>
               </TouchableOpacity>
+              </View>
+              <View style={styles.menuBox}>
               <TouchableOpacity onPress = {() => {navigate('GroupChannel')}}>
                 <View style={styles.menuBox}>
                   <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/communication.png'}}/>
                   <Text style={styles.info}>Messages</Text>
                 </View>
                 </TouchableOpacity>
+                </View>
+                <View style={styles.menuBox}>
+                <TouchableOpacity onPress = {() => {navigate('Profile')}}>
+                  <View style={styles.menuBox}>
+                    <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/user-settings.png'}}/>
+                    <Text style={styles.info}>Profile</Text>
+                  </View>
+                </TouchableOpacity>
+                </View>
                <View style={styles.menuBox}>
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/delivery-time.png'}}/>
                 <Text style={styles.info}>Stopwatch</Text>
@@ -99,10 +155,6 @@ const onSignoutPress = () => {
                <View style={styles.menuBox}>
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/stack-of-photos.png'}}/>
                 <Text style={styles.info}>Portfolio</Text>
-              </View>
-               <View style={styles.menuBox}>
-                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/user-settings.png'}}/>
-                <Text style={styles.info}>Settings</Text>
               </View>
              </View>
         </View>
@@ -131,15 +183,15 @@ const onSignoutPress = () => {
     color:"#FFFFFF",
     fontWeight:'600',
   },
-  bodyContent: {
-    flex: 1,
-    alignItems: 'center',
-    padding:30,
-  },
   textInfo:{
     fontSize:18,
     marginTop:20,
     color: "#696969",
+  },
+  userInfo:{
+    fontSize:16,
+    color:"#778899",
+    fontWeight:'600',
   },
   bodyContent:{
     paddingTop:40,
@@ -147,19 +199,13 @@ const onSignoutPress = () => {
     flexWrap: 'wrap'
   },
   menuBox:{
-    backgroundColor: "#DCDCDC",
+    backgroundColor: "white",
     width:100,
     height:100,
     alignItems: 'center',
     justifyContent: 'center',
-    margin:12,
-    shadowColor: 'black',
-    shadowOpacity: .2,
-    shadowOffset: {
-      height:2,
-      width:-2
-    },
-    elevation:4,
+    margin:10,
+    
   },
   icon: {
     width:60,

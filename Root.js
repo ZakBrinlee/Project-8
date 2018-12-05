@@ -12,6 +12,7 @@ import StylistRecordScreen from './screens/stylist/StylistRecords';
 import GroupChannel from './screens/GroupChannel';
 import GroupChannelInvite from './screens/GroupChannelInvite';
 import Chat from './screens/Chat';
+import Profile from './screens/Profile';
   
   const ClientStack = StackNavigator(
     {
@@ -47,6 +48,9 @@ import Chat from './screens/Chat';
       Chat: {
         screen: Chat
       },
+      Profile: {
+        screen:Profile
+      }
     },
     {
       initialRouteName: 'StylistHomeScreen',

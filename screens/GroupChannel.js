@@ -123,12 +123,14 @@ class GroupChannel extends Component {
 
     _renderTitle = (channel) => {
         const { lastMessage } = channel;
-        const titles = sbGetChannelTitle(channel).split(",");
-        console.log("GroupChannel _renderTitle: " + titles);
+        const title = sbGetChannelTitle(channel)
+        console.log("full channel title: " + title);
+        const titles = title.split(",");
+        console.log("After split: " + titles);
         return (
             <View style={styles.renderTitleViewStyle}>
                 <View style={{flexDirection: 'row'}}>
-                    <Text>{titles[0]}</Text>
+                    <Text style={styles.renderChatMember}>{titles[0]}</Text>
                     {/* <View style={styles.renderTitleMemberCountViewStyle}>
                         <Text style={styles.renderTitleTextStyle}>{channel.memberCount}</Text>
                     </View> */}
@@ -238,19 +240,6 @@ class GroupChannel extends Component {
             </View>
         )
     }
-
-    renderSeparator = () => {
-        return (
-          <View
-            style={{
-              height: 1,
-              width: "86%",
-              backgroundColor: "#CED0CE",
-              marginLeft: "14%"
-            }}
-          />
-        );
-      };
       
     render() {
         return (
@@ -304,13 +293,16 @@ const styles = {
         marginLeft: 4,
     },
     renderTitleTextStyle: {
-        fontSize: 15, 
+        fontSize: 18, 
         color: '#878D99'
     },
+    renderChatMember: {
+        fontSize: 20
+    },
     unreadCountViewStyle: {
-        width: 18,
-        height: 18,
-        padding: 3,
+        width: 22,
+        height: 22,
+        padding: 1,
         backgroundColor: '#e03131',
         borderRadius: 9,
         flexDirection: 'column',
@@ -318,8 +310,8 @@ const styles = {
         alignItems: 'center'
     },
     unreadCountTextStyle: {
-        fontSize: 8,
-        fontWeight: '500',
+        fontSize: 12,
+        fontWeight: '800',
         color: '#fff'
     },
     renderLastMessageViewStyle: {
@@ -328,11 +320,11 @@ const styles = {
         marginLeft: 10
     },
     renderLastMessageTextStyle: {
-        fontSize: 15,
+        fontSize: 18,
         color: '#878D99',
         marginTop: 3,
     },
     body: {
-        ccolor: '#fff'
+        backgroundColor: '#ffffff'
     }
 };
