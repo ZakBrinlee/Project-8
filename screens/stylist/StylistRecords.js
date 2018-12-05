@@ -1,53 +1,8 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Button, Header } from '../../components';
+import { View, StyleSheet, ListView, Text, TouchableOpacity } from 'react-native';
+import data from '../../jobData.json';
 
-import t from 'tcomb-form-native';
-
-const Form = t.form.Form;
-
-const Record = t.struct({
-  date: t.String,
-  client: t.String,
-  time: t.String,
-  amount: t.String
-});
-
-const formStyles = {
-  ...Form.stylesheet,
-  formGroup: {
-    normal: {
-      marginBottom: 10
-    },
-  },
-  controlLabel: {
-    normal: {
-      color: 'blue',
-      fontSize: 18,
-      marginBottom: 7,
-      fontWeight: '600'
-    },
-    // the style applied when a validation error occours
-    error: {
-      color: 'red',
-      fontSize: 18,
-      marginBottom: 7,
-      fontWeight: '600'
-    }
-  }
-}
-
-const options = {
-  fields: {
-    date: {
-      error: 'Please enter the date of the client appointment'
-    },
-    client: {
-      error: 'Please provide a client for this job'
-    },
-  },
-  stylesheet: formStyles,
-};
+const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
 export default class StylistRecords extends Component {
   
@@ -64,22 +19,71 @@ export default class StylistRecords extends Component {
     }
   });
   
-    handleSubmit = () => {
-    const value = this._form.getValue();
-    console.log('value: ', value);
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSource: ds.cloneWithRows([]),
+      jobs: data
+    }
   }
-  
-  render() {
+
+  componentDidMount() {
+    this.data = data;
+    this.setState({jobs: this.data});
+    this.setState({ dataSource: ds.cloneWithRows(this.data) });
+    console.log("jobs state: " + this.state.jobs);
+  }
+
+  // componentDidMount()
+  //   {
+  //       fetch('https://gamersite123.000webhostapp.com/data.json')
+  //       .then((response) => response.json())
+  //       .then((responseJson) =>
+  //       {
+  //           this.setState({ dataSource: ds.cloneWithRows( responseJson ) }, () => { this.setState({ loading: false }) });
+  //       })
+  //       .catch((error) =>
+  //       {
+  //           console.error(error);
+  //       });
+  //   }
+
+  renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "86%",
+          backgroundColor: "#CED0CE",
+          marginLeft: "14%"
+        }}
+      />
+    );
+  };
+
+  renderHeader = () => {
+    return <SearchBar placeholder="Type Here..." lightTheme round />;
+  };
+ 
+
+  render() {   
+    console.log(this.state.dataSource)
     return (
       <View style={styles.container}>
-        <Form 
-          ref={c => this._form = c}
-          type={Record} 
-          options={options}
-        />
-        <Button
-          title="Add Job"
-          onPress={this.handleSubmit}
+        <ListView
+          dataSource={this.state.dataSource}
+          // renderSeparator= {this.renderSeparator}
+          renderRow={(rowData) =>
+          <View style={{flex:1, flexDirection: 'column'}} >
+            <TouchableOpacity onPress={console.log("Pressed listItem")} >
+              <Text style={styles.textViewContainer} >{'Customer: ' + rowData.customer}</Text>
+              <Text style={styles.textViewContainer} >{'Date: ' + rowData.date}</Text>
+              <Text style={styles.textViewContainer} >{'Amount: $' + rowData.amount}</Text>
+              <Text style={styles.textViewContainer} >{'Time: ' + rowData.time + " Hours"}</Text>
+              <Text style={styles.textViewContainer} >{'Notes: ' + rowData.notes}</Text>
+            </TouchableOpacity>
+          </View>
+          }
         />
       </View>
     );
@@ -89,8 +93,15 @@ export default class StylistRecords extends Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    marginTop: 50,
+    marginTop: 0,
     padding: 20,
     backgroundColor: '#ffffff',
   },
+  textViewContainer: {
+    textAlignVertical:'center', 
+    padding:10,
+    fontSize: 20,
+    color: 'black',
+    
+   },
 });

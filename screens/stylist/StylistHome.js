@@ -13,6 +13,16 @@ import RootStackNavigator from '../../navigation/RootNavigation';
 import SendBird from 'sendbird';
 import { Button, Icon } from '../../components';
 
+const onSignoutPress = () => {
+  const sb = new SendBird({ 'appId': '0B7E1CDE-5B22-4850-8BC5-4F1B109CFD91' });
+  firebase.auth().signOut();
+  console.log("StylistHomeScreen Signout pressed")
+  //AsyncStorage.clear();
+
+  sb.disconnect(function(){
+    // You are disconnected from SendBird.
+  });
+}
 
  export default class StylistHome extends React.Component {
 
@@ -20,36 +30,25 @@ import { Button, Icon } from '../../components';
     headerTitle: 'Stylist Home',
     headerStyle: {
       backgroundColor: '#33FFC1',
-      textAlign: 'center'
+      height: 45,
     },
     headerTitleStyle: {
       color: '#6b52ae', 
       fontWeight: 'bold',
+      fontSize: 20
     },
     headerRight: (
       <Icon
         name='md-log-out'
         type='ionicon'
         color='#6b52ae'
-        onPress={() => console.log('hello')}
-        containerStyle ={ marginRight= 15 }
+        onPress={() => onSignoutPress()}
+        containerStyle={{ marginRight: 20 }}
+        size={25}
         />
     ),
   });
 
-
-  onSignoutPress = () => {
-    const sb = new SendBird({ 'appId': '0B7E1CDE-5B22-4850-8BC5-4F1B109CFD91' });
-    firebase.auth().signOut();
-    console.log("StylistHomeScreen Signout pressed")
-    //AsyncStorage.clear();
-
-    sb.disconnect(function(){
-      // You are disconnected from SendBird.
-    });
-  }
-
-  
 
    render() {
     const { navigate } = this.props.navigation;
@@ -62,7 +61,7 @@ import { Button, Icon } from '../../components';
                  <Text style={styles.name}>
                   Stylist Name
                 </Text>
-                <Button title="Sign Out" onPress={this.onSignoutPress} />
+                <Button title="Sign Out" onPress={onSignoutPress} />
             </View>
           </View>
            <View style={styles.body}>

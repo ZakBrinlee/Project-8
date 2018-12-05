@@ -24,6 +24,7 @@ import {
     sbUnixTimestampToDate, 
     sbGetChannelTitle 
 } from '../sendbirdActions';
+import { Divider } from 'react-native-elements';
 
 class GroupChannel extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -43,6 +44,8 @@ class GroupChannel extends Component {
                     name='md-person-add'
                     type='ionicon'
                     color='#6b52ae'
+                    containerStyle={{ marginRight: 20 }}
+                    size={25}
                     onPress={ () => { navigation.navigate('GroupChannelInvite', { title: 'Group Channel Create', channelUrl: null }) } }
                 />
             )
@@ -120,13 +123,15 @@ class GroupChannel extends Component {
 
     _renderTitle = (channel) => {
         const { lastMessage } = channel;
+        const titles = sbGetChannelTitle(channel).split(",");
+        console.log("GroupChannel _renderTitle: " + titles);
         return (
             <View style={styles.renderTitleViewStyle}>
                 <View style={{flexDirection: 'row'}}>
-                    <Text>{sbGetChannelTitle(channel)}</Text>
-                    <View style={styles.renderTitleMemberCountViewStyle}>
+                    <Text>{titles[0]}</Text>
+                    {/* <View style={styles.renderTitleMemberCountViewStyle}>
                         <Text style={styles.renderTitleTextStyle}>{channel.memberCount}</Text>
-                    </View>
+                    </View> */}
                 </View>
                 <View>
                     <Text style={styles.renderTitleTextStyle}>
@@ -213,27 +218,43 @@ class GroupChannel extends Component {
             }
         ]
         return (
-            <Swipeout
-                right={swipeoutBtns}
-                autoClose={true}>
-                <ListItem
-                    component={TouchableHighlight}
-                    containerStyle={{backgroundColor: '#fff'}}
-                    key={channel.url}
-                    avatar={<Avatar source={{uri: channel.coverUrl}} />}
-                    title={this._renderTitle(channel)}
-                    titleStyle={{fontWeight: '500', fontSize: 16}}
-                    subtitle={this._renderLastMessage(channel)}
-                    subtitleStyle={{fontWeight: '300', fontSize: 11}}
-                    onPress={ () => this._onListItemPress(channel.url) }
-                />
-            </Swipeout>
+            <View>
+                <Swipeout
+                    right={swipeoutBtns}
+                    autoClose={true}>
+                    <ListItem
+                        component={TouchableHighlight}
+                        containerStyle={{backgroundColor: '#fff'}}
+                        key={channel.url}
+                        avatar={<Avatar source={{uri: channel.coverUrl}} />}
+                        title={this._renderTitle(channel)}
+                        titleStyle={{fontWeight: '500', fontSize: 16}}
+                        subtitle={this._renderLastMessage(channel)}
+                        subtitleStyle={{fontWeight: '300', fontSize: 11}}
+                        onPress={ () => this._onListItemPress(channel.url) }
+                    />
+                </Swipeout>
+                <Divider style={{ backgroundColor: '#6b52ae', height: 3 }} />
+            </View>
         )
     }
 
+    renderSeparator = () => {
+        return (
+          <View
+            style={{
+              height: 1,
+              width: "86%",
+              backgroundColor: "#CED0CE",
+              marginLeft: "14%"
+            }}
+          />
+        );
+      };
+      
     render() {
         return (
-            <View>
+            <View style={styles.body}>
                 {/* <Spinner visible={this.props.isLoading} /> */}
                 <FlatList
                     renderItem={this._renderList}
@@ -283,7 +304,7 @@ const styles = {
         marginLeft: 4,
     },
     renderTitleTextStyle: {
-        fontSize: 10, 
+        fontSize: 15, 
         color: '#878D99'
     },
     unreadCountViewStyle: {
@@ -307,8 +328,11 @@ const styles = {
         marginLeft: 10
     },
     renderLastMessageTextStyle: {
-        fontSize: 12,
+        fontSize: 15,
         color: '#878D99',
         marginTop: 3,
+    },
+    body: {
+        ccolor: '#fff'
     }
 };

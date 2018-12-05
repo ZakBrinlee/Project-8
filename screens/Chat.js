@@ -34,10 +34,12 @@ import {
   import { MessageInput } from '../components/MessageInput';
 
 class Chat extends Component {
+
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
+    var title = params.title.split(",");
     return {
-      title: `${params.title}`,
+      title: `${title[0]}`,
       headerStyle: {
         backgroundColor: '#33FFC1',
         textAlign: 'center'
@@ -174,9 +176,12 @@ class Chat extends Component {
   };
 
   _onPhotoAddPress = () => {
+    console.log("onPhotoAddPress selected");
     const { channelUrl, isOpenChannel } = this.props.navigation.state.params;
     Permissions.checkMultiple([ 'photo' ]).then(response => {
+      console.log("onPhotoAddPress inside permissions");
       if(response.photo === 'authorized') {
+        console.log("onPhotoAddPress inside response.photo authorized");
         ImagePicker.showImagePicker(
           {
             title: "Select Image File To Send",
@@ -207,10 +212,12 @@ class Chat extends Component {
           }
         );
       } else if(response.photo === 'undetermined') {
+        console.log("onPhotoAddPress inside response.photo undetermined");
         Permissions.request('photo').then(response => {
           this._onPhotoAddPress();
         });
       } else {
+        console.log("onPhotoAddPress inside response.photo else");
         Alert.alert('Permission denied',
           'You declined the permission to access to your photo.',
           [ { text: 'OK' } ],
@@ -262,7 +269,7 @@ class Chat extends Component {
         <View style={{ opacity: this.props.typing ? 1 : 0, marginRight: 8 }}>
           {/* <BarIndicator count={4} size={10} animationDuration={900} color="#cbd0da" /> */}
         </View>
-        <Text style={{ color: "#cbd0da", fontSize: 10 }}>{this.props.typing}</Text>
+        <Text style={{ color: "#556077", fontSize: 15 }}>{this.props.typing}</Text>
       </View>
     );
   };
@@ -335,7 +342,7 @@ const styles = {
   },
   messageInputViewStyle: {
     flex: 1,
-    marginBottom: 0,
+    marginBottom: 5,
     flexDirection: "column",
     justifyContent: "center"
   }
