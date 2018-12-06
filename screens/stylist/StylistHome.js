@@ -55,19 +55,19 @@ const onSignoutPress = () => {
         role: "",
         uid: "",
         asyncRole: "",
+        bioImage: "",
     };
 }
   componentDidMount() {
-    this.getUserRole();
-    this.checkPersistData();
+    // this.getUserRole();
+    // this.checkPersistData();
+    console.log("CDM before GBI");
+    // this.getBioImage();
   }
 
   componentWillMount(){
-    this.checkPersistData();
-  }
-
-  getUserRole() {
-      //console.log("Inside getUserRole");
+    // this.checkPersistData();
+    // this.getUserRole();
       var user = firebase.auth().currentUser;
       if (user != null){
           this.setState({uid: user.uid});
@@ -80,10 +80,19 @@ const onSignoutPress = () => {
       itemsRef.once('value').then(snapshot => {
         this.setState({ role: snapshot.child("role").val() });
         this.setState({ name: snapshot.child("name").val() });
+        this.getBioImage(snapshot.child("name").val());
         //console.log("User Role from DB: " + this.state.role);
-      });         
+      });  
 
   }
+
+  getBioImage(name) {
+    if (name == 'Danielle'){
+      this.setState({bioImage: '../../assets/images/Danielle.jpg'});
+    } else {
+      this.setState({bioImage: '../../assets/images/Shannon.jpg'});  
+    }
+ }
 
   checkPersistData(){
     console.log("Inside checkPersistData")
@@ -100,7 +109,8 @@ const onSignoutPress = () => {
           <View style={styles.header}>
             <View style={styles.headerContent}>
                 <Image style={styles.avatar}
-                  source={{uri: 'https://bootdey.com/img/Content/avatar/avatar1.png'}}/>
+                  source={this.state.name === 'Danielle' ? require('../../assets/images/Danielle.jpg') : require('../../assets/images/Shannon.jpg') }
+                  />
                  <Text style={styles.name}>{this.state.name}</Text>
                   <Text style={styles.userInfo}>{this.state.role}</Text>
                 {/* <Button title="Sign Out" onPress={onSignoutPress} /> */}

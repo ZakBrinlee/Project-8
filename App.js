@@ -32,13 +32,13 @@ export default class App extends React.Component {
     this.setState({isAuthenticated: !!user});
 
     //This will pull the role that is tied to the UID
-    if (user != null){
-    var itemsRef = firebase.database().ref('/UsersList/' + user.uid);
-      itemsRef.once('value').then(snapshot => {
-        this.setState({ role: snapshot.child("role").val() });
-        console.log("App.js User Role from DB: " + this.state.role);
-      });         
-    }
+    // if (user != null){
+    // var itemsRef = firebase.database().ref('/UsersList/' + user.uid);
+    //   itemsRef.once('value').then(snapshot => {
+    //     this.setState({ role: snapshot.child("role").val() });
+    //     console.log("App.js User Role from DB: " + this.state.role);
+    //   });         
+    // }
 
     this.persistData();
 
