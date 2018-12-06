@@ -12,6 +12,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@babel/runtime": "^7.2.0",
     "@expo/samples": "2.1.1",
     "expo": "^31.0.0",
     "firebase": "^5.5.2",

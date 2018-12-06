@@ -8,8 +8,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as firebase from 'firebase';
-import { NavigationActions } from 'react-navigation';
-import RootStackNavigator from '../../navigation/RootNavigation';
 import SendBird from 'sendbird';
 import { Button, Icon } from '../../components';
 
@@ -101,11 +99,18 @@ import { Button, Icon } from '../../components';
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/stack-of-photos.png'}}/>
                 <Text style={styles.info}>Portfolio</Text>
               </View>
+              <TouchableOpacity onPress = {() => {navigate('StyleMemo')}}>
+                <View style={styles.menuBox}>
+                  <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/statistics.png'}}/>
+                  <Text style={styles.info}>StyleMemo</Text>
+                </View>
+              </TouchableOpacity>
                <View style={styles.menuBox}>
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/user-settings.png'}}/>
                 <Text style={styles.info}>Settings</Text>
               </View>
              </View>
+             
         </View>
       </ScrollView>
     );
