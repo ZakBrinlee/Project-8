@@ -1,38 +1,50 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, Text, } from 'react-native';
 import { Button, Icon } from '../components';
-import { CheckBox , FormLabel, FormInput, FormValidationMessage,  } from 'react-native-elements';
+import { CheckBox , ButtonGroup  } from 'react-native-elements';
 import { TouchableOpacity, ScrollView } from 'react-native';
 // import SegmentControl from 'react-native-segment-controller';
 
 
 export default class StyleMemo extends Component {
   
-    state = {
-        hairColor: '',
+  constructor () {
+    super()
+    this.state = {
+      checked: false,
+      selectedIndex: 2
     }
-    static navigationOptions = ({navigation}) => ({
-        headerTitle: 'Style Memo',
-        headerStyle: {
-          backgroundColor: '#33FFC1',
-          textAlign: 'center'
-        },
-        headerTitleStyle: {
-          color: '#6b52ae', 
-          fontWeight: 'bold',
-        },
-        headerRight: (
-          <Icon
-            name='md-log-out'
-            type='ionicon'
-            color='#6b52ae'
-            onPress={() => console.log('hello')}
-            containerStyle ={ marginRight= 15 }
-            />
-        ),
-      });
+    this.updateIndex = this.updateIndex.bind(this)
+  }
+
+  static navigationOptions = ({navigation}) => ({
+      headerTitle: 'Style Memo',
+      headerStyle: {
+        backgroundColor: '#33FFC1',
+        textAlign: 'center'
+      },
+      headerTitleStyle: {
+        color: '#6b52ae', 
+        fontWeight: 'bold',
+      },
+      headerRight: (
+        <Icon
+          name='md-log-out'
+          type='ionicon'
+          color='#6b52ae'
+          onPress={() => console.log('hello')}
+          containerStyle ={ marginRight= 15 }
+          />
+      ),
+    });
   
+  updateIndex (selectedIndex) {
+    this.setState({selectedIndex})
+  }
+
   render() {
+    const buttons = ['0-4 Weeks', '1-2 Months', '3-6 Months', '6+ Months']
+    const { selectedIndex } = this.state
     return (
             <ScrollView>
                 <View style={styles.container}>
@@ -48,23 +60,38 @@ export default class StyleMemo extends Component {
                 {"\n"} </Text>
 
                 <Text style={styles.h3}>
-                Date of My Last Haircut: {"\n"}        </Text>
-                        <CheckBox
+                Date of My Last Haircut: {"\n"}</Text>
+                        <ButtonGroup
+                          onPress={this.updateIndex}
+                          selectedIndex={selectedIndex}
+                          buttons={buttons}
+                          containerStyle={{height: 50, alignContent: 'center', backgroundColor: '#FCF7F6'}}
+                          textStyle={{fontWeight:'300', fontSize: 15, color: 'black'}}
+                          selectedButtonStyle={{backgroundColor: "#33FFC1"}}
+                          selectedTextStyle={{color: 'black'}}
+                        />
+                        {/* <CheckBox
                         title='0-4 Weeks'
                         checked={this.state.checked}
+                        onPress={(value) => this.setState({ checked: !this.state.checked, haircut: value })}
                         />
                         <CheckBox
                         title='1-2 Months'
                         checked={this.state.checked}
+                        onPress={() => this.setState({ checked: !this.state.checked })}
                         />
                         <CheckBox
                         title='3-6 Months'
                         checked={this.state.checked}
+                        onPress={() => this.setState({ checked: !this.state.checked })}
+
                         />
                         <CheckBox
                         title='6+ Months'
                         checked={this.state.checked}
-                        />
+                        onPress={() => this.setState({ checked: !this.state.checked })}
+
+                        /> */}
                 
                 <Text style={styles.h3}>
                     {"\n"}My Current Length:{"\n"}        </Text>
@@ -252,7 +279,6 @@ export default class StyleMemo extends Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    marginTop: 50,
     padding: 20,
     backgroundColor: '#ffffff',
   },
@@ -281,7 +307,7 @@ const styles = StyleSheet.create({
     fontStyle:'italic',
   },
   chair:{
-    width:250,
+    width:315,
     height:400,
     backgroundColor: "#00BFFF",
 },
