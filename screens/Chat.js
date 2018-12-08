@@ -16,22 +16,23 @@ import {
   typingEnd,
   channelExit
 } from "../actions";
-import { 
-  Button, 
-  TextItem, 
-  FileItem, 
-  ImageItem,  
-  Message, 
+import {
+  Button,
+  TextItem,
+  FileItem,
+  ImageItem,
+  Message,
   AdminMessage } from "../components";
 import ImagePicker from "react-native-image-picker";
-import { 
-  sbGetGroupChannel, 
-  sbGetOpenChannel, 
-  sbCreatePreviousMessageListQuery, 
-  sbAdjustMessageList, 
-  sbIsImageMessage, 
+import {
+  sbGetGroupChannel,
+  sbGetOpenChannel,
+  sbCreatePreviousMessageListQuery,
+  sbAdjustMessageList,
+  sbIsImageMessage,
   sbMarkAsRead } from "../sendbirdActions";
   import { MessageInput } from '../components/MessageInput';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 class Chat extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -43,7 +44,7 @@ class Chat extends Component {
         textAlign: 'center'
       },
       headerTitleStyle: {
-        color: '#6b52ae', 
+        color: '#6b52ae',
         fontWeight: 'bold',
       },
     };
@@ -290,6 +291,7 @@ class Chat extends Component {
             onChangeText={this._onTextMessageChanged}
           />
         </View>
+          <KeyboardSpacer />
       </View>
     )
   }
