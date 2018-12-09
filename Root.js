@@ -13,6 +13,7 @@ import GroupChannel from './screens/GroupChannel';
 import GroupChannelInvite from './screens/GroupChannelInvite';
 import Chat from './screens/Chat';
 import Profile from './screens/Profile';
+import StylistRecordsAdd from './screens/stylist/StylistRecordsAdd';
   
   const ClientStack = StackNavigator(
     {
@@ -38,6 +39,9 @@ import Profile from './screens/Profile';
       },
       StylistRecords: {
         screen: StylistRecordScreen
+      },
+      StylistRecordsAdd: {
+        screen: StylistRecordsAdd
       },
       GroupChannel: {
         screen: GroupChannel
