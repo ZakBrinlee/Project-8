@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TextInput, Button, Alert, Image, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 export default class ForgotPasswordScreen extends React.Component {
 
@@ -12,7 +13,7 @@ export default class ForgotPasswordScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             email: "",
         };
     }
@@ -44,13 +45,12 @@ export default class ForgotPasswordScreen extends React.Component {
                         source={require('./lock.jpg')}
                     />
                     <Text style={styles.textPswd}>Forgot your password?</Text>
-                    
+
                      <Text style={styles.text2}>Enter your Email address below.</Text>
                 </View>
 
-
                 <View style={styles. inputBox}>
-                   
+
                      <TextInput style={styles.textInput}
                         value={this.state.email}
                         onChangeText={(text) => { this.setState({email: text}) }}
@@ -64,19 +64,19 @@ export default class ForgotPasswordScreen extends React.Component {
                 <View style={styles.bottonBox}>
                     <TouchableOpacity style={styles.botton} onPress={this.onResetPasswordPress}>
                         <Text style={styles.bottonText}>Reset Password</Text>
-                        
-                    </TouchableOpacity>{/*End of botton1*/}
-                </View> 
 
-               
+                    </TouchableOpacity>{/*End of botton1*/}
+                </View>
+                <KeyboardSpacer />
+
                 <View style={styles.bottonBox}>
                     <TouchableOpacity style={styles.botton} onPress={this.onBackToLoginPress}>
                         <Text style={styles.bottonText}>Back to Login</Text>
-                        
-                    </TouchableOpacity>{/*End of botton2*/}
-                </View> 
 
-                
+                    </TouchableOpacity>{/*End of botton2*/}
+                </View>
+
+
             </View>
         );
     }
@@ -120,8 +120,8 @@ const styles = StyleSheet.create({
 
     textInput:{
         paddingTop:10,
-        width: 250, 
-        height: 50, 
+        width: 250,
+        height: 50,
         borderWidth: 0,
 
     },
@@ -138,9 +138,9 @@ const styles = StyleSheet.create({
         borderRadius: 9,
         alignItems: 'center',
         justifyContent: 'center',
-        
+
    },
-   
+
    buttonText: {
         color: '#fff',
         fontSize: 20,
