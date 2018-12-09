@@ -291,7 +291,9 @@ class Chat extends Component {
             onChangeText={this._onTextMessageChanged}
           />
         </View>
+        <View style={{marginBottom: 25}}>
           <KeyboardSpacer />
+        </View>
       </View>
     )
   }
@@ -324,7 +326,7 @@ const styles = {
     marginRight: 14,
     marginTop: 4,
     marginBottom: 0,
-    paddingBottom: 0,
+    paddingBottom: 25,
     height: 14
   },
   containerViewStyle: {
