@@ -23,7 +23,7 @@ import {
   ImageItem,  
   Message, 
   AdminMessage } from "../components";
-import ImagePicker from "react-native-image-picker";
+// import ImagePicker from "react-native-image-picker";
 import { 
   sbGetGroupChannel, 
   sbGetOpenChannel, 
@@ -31,7 +31,8 @@ import {
   sbAdjustMessageList, 
   sbIsImageMessage, 
   sbMarkAsRead } from "../sendbirdActions";
-  import { MessageInput } from '../components/MessageInput';
+import { MessageInput } from '../components/MessageInput';
+import { ImagePicker } from 'expo';
 
 class Chat extends Component {
 
@@ -175,42 +176,45 @@ class Chat extends Component {
     }
   };
 
-  _onPhotoAddPress = () => {
+  _onPhotoAddPress = (result) => {
     console.log("onPhotoAddPress selected");
     const { channelUrl, isOpenChannel } = this.props.navigation.state.params;
     Permissions.checkMultiple([ 'photo' ]).then(response => {
       console.log("onPhotoAddPress inside permissions");
+      console.log("response: " + response.photo);
       if(response.photo === 'authorized') {
         console.log("onPhotoAddPress inside response.photo authorized");
-        ImagePicker.showImagePicker(
-          {
-            title: "Select Image File To Send",
-            mediaType: "photo",
-            noData: true
-          },
-          response => {
-            if (!response.didCancel && !response.error && !response.customButton) {
-              let source = { uri: response.uri };
-              if (response.name) {
-                source["name"] = response.fileName;
-              } else {
-                paths = response.uri.split("/");
-                source["name"] = paths[paths.length - 1];
-              }
-              if (response.type) {
-                source["type"] = response.type;
-              } else {
-                /** For react-native-image-picker library doesn't return type in iOS,
-                 *  it is necessary to force the type to be an image/jpeg (or whatever you're intended to be).
-                */
-                if (Platform.OS === "ios") {
-                  source["type"] = 'image/jpeg';
-                }
-              }
-              this.props.onFileButtonPress(channelUrl, isOpenChannel, source);
+
+        let results = result;
+
+        console.log("photo: " + results);
+
+        if (!results.cancelled) {
+          console.log("result.cancelled not true");
+          let source = { uri: results.uri };
+          console.log("source: " + source);
+          console.log("uri: " + results.uri);
+          if (!result.name) {
+            source["name"] = results.fileName;
+            console.log("source: " + source["name"]);
+          } else {
+            paths = results.uri.split("/");
+            source["name"] = paths[paths.length - 1];
+          }
+          if (result.type) {
+            source["type"] = response.type;
+          } else {
+            /** For react-native-image-picker library doesn't return type in iOS,
+             *  it is necessary to force the type to be an image/jpeg (or whatever you're intended to be).
+            */
+            if (Platform.OS === "ios") {
+              source["type"] = 'image/jpeg';
             }
           }
-        );
+          console.log("photo before onFileButtonPress");
+          this.props.onFileButtonPress(channelUrl, isOpenChannel, source);
+        }
+          
       } else if(response.photo === 'undetermined') {
         console.log("onPhotoAddPress inside response.photo undetermined");
         Permissions.request('photo').then(response => {
@@ -225,6 +229,22 @@ class Chat extends Component {
       }
     });
   };
+
+
+  _pickImage = async () => {
+    console.log("Inside pickImage");
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: false,
+    });
+
+    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+    }
+
+    console.log("inside PI: " + result)
+    this._onPhotoAddPress(result);
+  };
+
 
   _renderFileMessageItem = rowData => {
     const message = rowData.item;
@@ -291,7 +311,7 @@ class Chat extends Component {
         <View style={styles.messageInputViewStyle}>
           {this._renderTyping()}
           <MessageInput
-            onLeftPress={this._onPhotoAddPress}
+            onLeftPress={this._pickImage}
             onRightPress={this._onSendButtonPress}
             textMessage={this.state.textMessage}
             onChangeText={this._onTextMessageChanged}
