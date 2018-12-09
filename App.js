@@ -2,13 +2,15 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import MainTabNavigator from './navigation/MainTabNavigator';
 import ApiKeys from './constants/ApiKeys';
 import * as firebase from 'firebase';
+import ClientHomeScreen from './navigation/MainTabNavigator';
 import RootNavigator from './navigation/RootNavigation';
+//import RootNavigator from './Root';
 import Root from './Root';
 import { AsyncStorage } from "react-native"
-import { Provider } from 'react-redux';
-import store from './store';
+
 
 export default class App extends React.Component {
   
@@ -61,14 +63,12 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <Provider store={store}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-            {(this.state.isAuthenticated) ?  <Root /> : <RootNavigator />}
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+          {(this.state.isAuthenticated) ?  <Root /> : <RootNavigator />}
 
-          </View>
-        </Provider>
+        </View>
       );
     }
   }

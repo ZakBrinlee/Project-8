@@ -77,12 +77,61 @@ export default class ClientHomeScreen extends React.Component {
                     <Button title="Sign Out" onPress={this.onSignoutPress} />
                 </View>
               </View>
-              <Text style={styles.name}>Form Fields to go here</Text>
-              <Button title="Save Changes"/>
+    
               <View style={styles.body}>
-                
-              </View>
+                <View style={styles.bodyContent}>
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/2952/user-male'}}/>
+                      <Text style={styles.info}>Profile</Text>
+                    </TouchableOpacity>
+                  </View>
                  
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/63/secured-letter'}}/>
+                      <Text style={styles.info}>Chat</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/23/calendar'}}/>
+                      <Text style={styles.info}>Date</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/532/news'}}/>
+                      <Text style={styles.info}>History</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/3096/menu'}}/>
+                      <Text style={styles.info}>Service</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity >
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/364/settings'}}/>
+                      <Text style={styles.info}>Setting</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity onPress={this.onSignoutPress}>
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/46/delete'}}/>
+                      <Text style={styles.info}>SignOut</Text>
+                    </TouchableOpacity>
+                  </View>
+
+              
+              </View>
+              </View>
           </ScrollView>
         );
       }
@@ -90,7 +139,7 @@ export default class ClientHomeScreen extends React.Component {
     
     const styles = StyleSheet.create({
       header:{
-        backgroundColor: "#006600",
+        backgroundColor: "#33FFC1",
       },
       headerContent:{
         padding:30,

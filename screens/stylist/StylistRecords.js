@@ -1,96 +1,88 @@
-import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Button, Header } from '../../components';
+import React from 'react';
+import { Text, View, Button, StyleSheet, Image, ScrollView, TouchableNativeFeedback } from 'react-native';
 
-import t from 'tcomb-form-native';
+class StylistRecords extends React.Component {
+    static navigationOptions = ({navigation}) => ({
+        headerTitle: 'Job History',
+        headerStyle: {
+          backgroundColor: '#33FFC1'
+        },
+        headerTitleStyle: {
+          color: '#FFF'
+        }
+      });
 
-const Form = t.form.Form;
-
-const Record = t.struct({
-  date: t.String,
-  client: t.String,
-  time: t.String,
-  amount: t.String
-});
-
-const formStyles = {
-  ...Form.stylesheet,
-  formGroup: {
-    normal: {
-      marginBottom: 10
-    },
-  },
-  controlLabel: {
-    normal: {
-      color: 'blue',
-      fontSize: 18,
-      marginBottom: 7,
-      fontWeight: '600'
-    },
-    // the style applied when a validation error occours
-    error: {
-      color: 'red',
-      fontSize: 18,
-      marginBottom: 7,
-      fontWeight: '600'
+    constructor() {
+        super();
+        this.onPress = this.onPress.bind(this);
+        this.state = {
+            records: undefined
+        }
     }
-  }
-}
 
-const options = {
-  fields: {
-    date: {
-      error: 'Please enter the date of the client appointment'
-    },
-    client: {
-      error: 'Please provide a client for this job'
-    },
-  },
-  stylesheet: formStyles,
-};
-
-export default class StylistRecords extends Component {
-  
-  static navigationOptions = ({navigation}) => ({
-    headerTitle: 'Job History',
-    headerStyle: {
-      backgroundColor: '#33FFC1',
-      textAlign: 'center'
-    },
-    headerTitleStyle: {
-      color: '#6b52ae', 
-      fontWeight: 'bold',
-      textAlign: 'center'
+    componentDidMount() {
+        fetch("https://randomuser.me/api/?results=10").then(x => {
+            const results = JSON.parse(x._bodyInit).results;
+            this.setState({ records: results });
+        });
     }
-  });
-  
-    handleSubmit = () => {
-    const value = this._form.getValue();
-    console.log('value: ', value);
-  }
-  
-  render() {
-    return (
-      <View style={styles.container}>
-        <Form 
-          ref={c => this._form = c}
-          type={Record} 
-          options={options}
-        />
-        <Button
-          title="Add Job"
-          onPress={this.handleSubmit}
-        />
-      </View>
-    );
-  }
+
+    onPress(record) {
+        this.props.navigation.navigate("Details", {record: record});
+    }
+
+    drawContent(record, index) {
+        return (
+            <TouchableNativeFeedback key={index} onPress={()=> {this.onPress(record)}}>
+                <View style={styles.record}>
+                    <Image style={styles.image} source={{ uri: record.picture.thumbnail }} />
+                    <View>
+                        <Text style={styles.recordName}>{record.name.first} {record.name.last}</Text>
+                        <Text>C: {record.cell}</Text>
+                    </View>
+                </View>
+            </TouchableNativeFeedback>
+        );
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <ScrollView style={styles.wrapper}>
+                    {this.state.records && this.state.records.map((record, index) => {
+                        return this.drawContent(record, index)
+                    })}
+                </ScrollView>
+                <Button onPress={() => { }} title="Add record" />
+            </View>)
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    marginTop: 50,
-    padding: 20,
-    backgroundColor: '#ffffff',
-  },
-});
+    container: {
+        flex: 1,
+        padding: 10
+    },
+    wrapper: {
+        flex: 1,
+        marginBottom: 10
+    },
+    record: {
+        flexDirection: 'row',
+        borderWidth: 1,
+        borderRadius: 6,
+        borderColor: 'grey',
+        marginBottom: 10
+    },
+    recordName: {
+        fontWeight: '600'
+    },
+    image: {
+        width: 50,
+        height: 50,
+        backgroundColor: 'skyblue',
+        marginRight: 10
+    }
+})
+
+export default StylistRecords;

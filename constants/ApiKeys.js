@@ -4,7 +4,7 @@ export default {
     authDomain: "project-8-privyd.firebaseapp.com",
     databaseURL: "https://project-8-privyd.firebaseio.com",
     projectId: "project-8-privyd",
-    storageBucket: "project-8-privyd.appspot.com",
+    storageBucket: "gs://project-8-privyd.appspot.com",
     messagingSenderId: "7975847010"
 	}
 }

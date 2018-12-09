@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,Image,Button,ScrollView,TouchableOpacity} from 'react-native';
+import {StyleSheet,Text,View,Image,Button,ScrollView,TouchableOpacity,Alert} from 'react-native';
 import * as firebase from 'firebase';
+import { ImagePicker,Camera, Permissions,Constants,ImageManipulator } from 'expo';
 import { AsyncStorage } from "react-native"
 
 export default class ClientHome extends React.Component {
+
+  state = {
+    image: null,
+  };
+
    static navigationOptions = {
         header: null
     }//remove the default header
@@ -46,7 +52,7 @@ export default class ClientHome extends React.Component {
 
     }
 
-    checkPersistData(){
+  checkPersistData(){
       console.log("Inside checkPersistData")
       AsyncStorage.getItem('userRole').then((userRole)=>{
         this.setState({asyncRole: userRole })
@@ -61,9 +67,83 @@ export default class ClientHome extends React.Component {
         AsyncStorage.clear();
       }
 
+  pickFromGallery = async () => {
+    const permissions = Permissions.CAMERA_ROLL;
+    const { status } = await Permissions.askAsync(permissions);
+
+    console.log(permissions, status);
+    if(status === 'granted') {
+      let image = await ImagePicker.launchImageLibraryAsync();
+      if (!image.cancelled) {
+        let resizeImage = await ImageManipulator.manipulate(
+          image.uri,[{ resize: { width: 108, height: 192 } }],
+                { compress: 1, format: "png", base64: false}
+            );
+       // console.log(image.uri);
+       // let uriParts= (image.uri).split('/');
+       // let newUri="file:///data/user/0/host.exp.exponent/cache/"+uriParts[uriParts.length-1];
+        
+        this.uploadImage(resizeImage.uri, "test-image")
+        .then(() => {
+          Alert.alert("Success");
+        })
+        .catch((error) => {
+          Alert.alert(error);
+        });
+    }
+    }
+  }
+
+  pickFromCamera = async () => {
+    const permissions = Permissions.CAMERA;
+    const { status } = await Permissions.askAsync(permissions);
+
+    console.log(permissions, status);
+    if(status === 'granted') {
+      let image = await ImagePicker.launchCameraAsync({
+        
+        allowsEditing: true,
+        mediaTypes: 'Images',
+      }).catch(error => console.log(permissions, { error })); 
+       this.uploadImage(image.uri, "test-image" );
+                                                                                                                              
+      console.log(permissions, 'SUCCESS', image.uri);
+    }
+  }
+
+   
+   uploadImage = async (uri, imageName) => { 
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    var ref = firebase.storage().ref().child("images/" + imageName);
+    return ref.put(blob);
+  }
+
+    ShowAlertDialog = () =>{
+          Alert.alert(
+          // This is Alert Dialog Title
+          'Upload images',
+
+          // This is Alert Dialog Message. 
+          'Choose images from...',
+        [
+          // First Text Button in Alert Dialog.
+          {text: 'Open Camera', onPress: this.pickFromCamera},
+
+          // Second Cancel Button in Alert Dialog.
+          {text: 'Open Folder', onPress: this.pickFromGallery},
+
+          // Third OK Button in Alert Dialog
+         {text: 'Cancel', onPress: () => console.log('Cancel Button Pressed'), style: 'cancel'},
+       ])
+      }
+
+      
+
 
       render() {
-        const { navigate } = this.props.navigation;
+        let { image } = this.state;
         return (
           <ScrollView style={styles.container}>
               <View style={styles.header}>
@@ -82,7 +162,7 @@ export default class ClientHome extends React.Component {
               <View style={styles.body}>
                 <View style={styles.bodyContent}>
                   <View style={styles.menuBox}>
-                    <TouchableOpacity onPress = {() => {navigate('ClientProfile')}}>
+                    <TouchableOpacity >
                       <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/2952/user-male'}}/>
                       <Text style={styles.info}>Profile</Text>
                     </TouchableOpacity>
@@ -130,6 +210,15 @@ export default class ClientHome extends React.Component {
                     </TouchableOpacity>
                   </View>
 
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity onPress={this.ShowAlertDialog}>
+                      <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/5376/camera'}}/>
+                      <Text style={styles.info}>Upload</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  
+
               
               </View>
               </View>
@@ -166,7 +255,7 @@ export default class ClientHome extends React.Component {
       },
       body:{
         backgroundColor: "white",
-        height:310,
+        height:400,
        },
 
     

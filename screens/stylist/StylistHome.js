@@ -6,12 +6,11 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import * as firebase from 'firebase';
 import { NavigationActions } from 'react-navigation';
 import RootStackNavigator from '../../navigation/RootNavigation';
-import SendBird from 'sendbird';
-import { Button, Icon } from '../../components';
 
 
  export default class StylistHome extends React.Component {
@@ -19,37 +18,18 @@ import { Button, Icon } from '../../components';
   static navigationOptions = ({navigation}) => ({
     headerTitle: 'Stylist Home',
     headerStyle: {
-      backgroundColor: '#33FFC1',
-      textAlign: 'center'
+      backgroundColor: '#33FFC1'
     },
     headerTitleStyle: {
-      color: '#6b52ae', 
-      fontWeight: 'bold',
-    },
-    headerRight: (
-      <Icon
-        name='md-log-out'
-        type='ionicon'
-        color='#6b52ae'
-        onPress={() => console.log('hello')}
-        containerStyle ={ marginRight= 15 }
-        />
-    ),
+      color: '#FFF'
+    }
   });
 
-
   onSignoutPress = () => {
-    const sb = new SendBird({ 'appId': '0B7E1CDE-5B22-4850-8BC5-4F1B109CFD91' });
     firebase.auth().signOut();
     console.log("StylistHomeScreen Signout pressed")
     //AsyncStorage.clear();
-
-    sb.disconnect(function(){
-      // You are disconnected from SendBird.
-    });
   }
-
-  
 
    render() {
     const { navigate } = this.props.navigation;
@@ -79,12 +59,10 @@ import { Button, Icon } from '../../components';
                   <Text style={styles.info}>Clients</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress = {() => {navigate('GroupChannel')}}>
-                <View style={styles.menuBox}>
-                  <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/communication.png'}}/>
-                  <Text style={styles.info}>Messages</Text>
-                </View>
-                </TouchableOpacity>
+               <View style={styles.menuBox}>
+                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/communication.png'}}/>
+                <Text style={styles.info}>Messages</Text>
+              </View>
                <View style={styles.menuBox}>
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/linen/50/000000/delivery-time.png'}}/>
                 <Text style={styles.info}>Stopwatch</Text>
