@@ -5,6 +5,7 @@ import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 import { sendbirdLogin } from '../../actions';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
   
 //   async function checkMultiPermissions() {
@@ -31,7 +32,7 @@ class LoginScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             userId: "zak@test.com",
             password: "testtest",
 
@@ -98,7 +99,7 @@ class LoginScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.box1}>
-                    
+
                     <Image
                         style={styles.logo}
                         source={require('./logo.png')}
@@ -111,11 +112,11 @@ class LoginScreen extends React.Component {
                     <Text style={styles.box2_text2}>&</Text>
                     <Text style={styles.box2_text3}>Visualize Style</Text>
                 </View>
-            
+
                 <View style={styles.loginbox}>
 
-                    <Text style={styles.login}>Login</Text> 
-                    
+                    <Text style={styles.login}>Login</Text>
+
                     <TextInput style={styles.textinput}
                         value={this.state.userId}
                         placeholder="Email"
@@ -125,7 +126,7 @@ class LoginScreen extends React.Component {
                         onChangeText={this._userIdChanged}
                     />
 
-                   
+
 
                     <TextInput style={styles.textinput}
                             value={this.state.password}
@@ -136,29 +137,29 @@ class LoginScreen extends React.Component {
                             autoCorrect={false}
                         />
                 </View>
-                
+                <KeyboardSpacer />
                 <View style={styles.loginbt}>
                     <TouchableOpacity style={styles.botton} onPress={this.onLoginPress}>
                         <Text style={styles.bottonText}>Login</Text>
-                        
+
                     </TouchableOpacity>
-                </View> 
-               
+                </View>
+
+
                 <View style={styles.loginbt}>
                     <TouchableOpacity style={styles.botton} onPress={this.onCreateAccountPress}>
                         <Text style={styles.bottonText}>Sign Up</Text>
-                        
+
                     </TouchableOpacity>
-                </View> 
-                
-                    
+                </View>
+
+
                 <View style={styles.loginbt}>
                     <TouchableOpacity style={styles.botton}  onPress={this.onForgotPasswordPress}>
                         <Text style={styles.bottonText}>Forgot Password</Text>
-                        
+
                     </TouchableOpacity>
-                </View> 
-                
+                </View>
             </View>
         );
     }
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
         paddingTop:6,
         backgroundColor: 'white',
         flex:1,
-        
+
     },
 
     box1:{
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
         color:'white',
         fontSize:35,
         fontWeight:'600',
-        
+
     },
     box2_text2:{
         padding:5,
@@ -219,7 +220,7 @@ const styles = StyleSheet.create({
         fontSize:38,
         fontWeight:'600',
         textAlign:'center',
-       
+
     },
     box2_text3:{
         padding:5,
@@ -227,12 +228,12 @@ const styles = StyleSheet.create({
         fontSize:35,
         fontWeight:'600',
         textAlign:'right',
-        
+
     },
 
     loginbox:{
         flex:0.25,
-        paddingTop:15, 
+        paddingTop:15,
         alignItems:"center",
     },
 
@@ -243,8 +244,8 @@ const styles = StyleSheet.create({
     },
 
     textinput:{
-        width: 250, 
-        height: 50, 
+        width: 250,
+        height: 50,
         borderWidth: 0,
     },
 
@@ -260,23 +261,16 @@ const styles = StyleSheet.create({
         borderRadius: 9,
         alignItems: 'center',
         justifyContent: 'center',
-        
+
    },
-   
+
    buttonText: {
         color: '#fff',
         fontSize: 20,
         fontWeight: 'bold',
     },
-   
-    
+
+
 });
 
 export default connect(mapStateToProps, { sendbirdLogin })(LoginScreen);
-
-
-
-
-
-
-
