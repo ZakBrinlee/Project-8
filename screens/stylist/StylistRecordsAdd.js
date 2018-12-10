@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import {Button, Item, Icon, Label, Input, Form, Content, Container, Picker, Text, Textarea, DatePicker} from 'native-base';
 import * as firebase from 'firebase';
+import { StackNavigator } from 'react-navigation';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 export default class StylistRecordsAdd extends Component {
@@ -23,7 +24,7 @@ export default class StylistRecordsAdd extends Component {
     super(props);
     this.state = {
       uid: "",
-      customer: undefined,
+      customer: 'Danielle',
       chosenDate: new Date(),
       note: '',
       time: '',
@@ -58,12 +59,12 @@ export default class StylistRecordsAdd extends Component {
  
     submitRecord() {
         const customer = this.state.customer;
-        const chosenDate = this.state.chosenDate;
+        const chosenDate = this.state.chosenDate.toString();
         const time = this.state.time;
         const amount = this.state.amount;
         const note = this.state.note;
-
-        firebase.database().ref('UsersList/' + this.state.uid + '/StyleRecords').set({
+        console.log(customer + "+" + chosenDate + "+" + time);
+        firebase.database().ref('UsersList/' + this.state.uid + '/StyleRecords').push({
             customer,
             chosenDate, 
             time,
@@ -72,11 +73,13 @@ export default class StylistRecordsAdd extends Component {
         }).then((data)=>{
             //success callback
             console.log('data ' , data)
-            navigation.navigate('StylistRecords')
+            this.props.navigation.navigate('StylistRecords')
         }).catch((error)=>{
             //error callback
             console.log('error ' , error)
         })
+
+        
     }
 
   onValueChange2(value) {
