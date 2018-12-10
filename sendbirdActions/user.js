@@ -60,3 +60,14 @@ export const sbDisconnect = () => {
         }
     })
 }
+
+export const sbGetCurrentInfo = () => {
+    const sb = SendBird.getInstance();
+    if(sb.currentUser) {
+        return {
+            profileUrl: sb.currentUser.profileUrl,
+            nickname: sb.currentUser.nickname
+        }
+    }
+    return {};
+}

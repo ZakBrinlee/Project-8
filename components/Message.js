@@ -47,7 +47,7 @@ const AdminMessage = (props) => {
                     marginBottom: 8, 
                     marginLeft: 14,
                     marginRight: 14,
-                    backgroundColor: '#e6e9f0'
+                    backgroundColor: '#e6e9f0',
                 },
             ]}>
             <Text>{ props.message }</Text>

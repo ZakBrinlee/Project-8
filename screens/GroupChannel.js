@@ -24,12 +24,13 @@ import {
     sbUnixTimestampToDate, 
     sbGetChannelTitle 
 } from '../sendbirdActions';
+import { Divider } from 'react-native-elements';
 
 class GroupChannel extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params } = navigation.state;
         return {
-            title: 'Chat Messages',
+            title: 'Messages',
             headerStyle: {
                 backgroundColor: '#33FFC1',
                 textAlign: 'center'
@@ -43,6 +44,8 @@ class GroupChannel extends Component {
                     name='md-person-add'
                     type='ionicon'
                     color='#6b52ae'
+                    containerStyle={{ marginRight: 20 }}
+                    size={25}
                     onPress={ () => { navigation.navigate('GroupChannelInvite', { title: 'Group Channel Create', channelUrl: null }) } }
                 />
             )
@@ -120,13 +123,17 @@ class GroupChannel extends Component {
 
     _renderTitle = (channel) => {
         const { lastMessage } = channel;
+        const title = sbGetChannelTitle(channel)
+        console.log("full channel title: " + title);
+        const titles = title.split(",");
+        console.log("After split: " + titles);
         return (
             <View style={styles.renderTitleViewStyle}>
                 <View style={{flexDirection: 'row'}}>
-                    <Text>{sbGetChannelTitle(channel)}</Text>
-                    <View style={styles.renderTitleMemberCountViewStyle}>
+                    <Text style={styles.renderChatMember}>{titles[0]}</Text>
+                    {/* <View style={styles.renderTitleMemberCountViewStyle}>
                         <Text style={styles.renderTitleTextStyle}>{channel.memberCount}</Text>
-                    </View>
+                    </View> */}
                 </View>
                 <View>
                     <Text style={styles.renderTitleTextStyle}>
@@ -213,27 +220,30 @@ class GroupChannel extends Component {
             }
         ]
         return (
-            <Swipeout
-                right={swipeoutBtns}
-                autoClose={true}>
-                <ListItem
-                    component={TouchableHighlight}
-                    containerStyle={{backgroundColor: '#fff'}}
-                    key={channel.url}
-                    avatar={<Avatar source={{uri: channel.coverUrl}} />}
-                    title={this._renderTitle(channel)}
-                    titleStyle={{fontWeight: '500', fontSize: 16}}
-                    subtitle={this._renderLastMessage(channel)}
-                    subtitleStyle={{fontWeight: '300', fontSize: 11}}
-                    onPress={ () => this._onListItemPress(channel.url) }
-                />
-            </Swipeout>
+            <View>
+                <Swipeout
+                    right={swipeoutBtns}
+                    autoClose={true}>
+                    <ListItem
+                        component={TouchableHighlight}
+                        containerStyle={{backgroundColor: '#fff'}}
+                        key={channel.url}
+                        avatar={<Avatar source={{uri: channel.coverUrl}} />}
+                        title={this._renderTitle(channel)}
+                        titleStyle={{fontWeight: '500', fontSize: 16}}
+                        subtitle={this._renderLastMessage(channel)}
+                        subtitleStyle={{fontWeight: '300', fontSize: 11}}
+                        onPress={ () => this._onListItemPress(channel.url) }
+                    />
+                </Swipeout>
+                <Divider style={{ backgroundColor: '#6b52ae', height: 3 }} />
+            </View>
         )
     }
-
+      
     render() {
         return (
-            <View>
+            <View style={styles.body}>
                 {/* <Spinner visible={this.props.isLoading} /> */}
                 <FlatList
                     renderItem={this._renderList}
@@ -283,13 +293,16 @@ const styles = {
         marginLeft: 4,
     },
     renderTitleTextStyle: {
-        fontSize: 10, 
+        fontSize: 18, 
         color: '#878D99'
     },
+    renderChatMember: {
+        fontSize: 20
+    },
     unreadCountViewStyle: {
-        width: 18,
-        height: 18,
-        padding: 3,
+        width: 22,
+        height: 22,
+        padding: 1,
         backgroundColor: '#e03131',
         borderRadius: 9,
         flexDirection: 'column',
@@ -297,8 +310,8 @@ const styles = {
         alignItems: 'center'
     },
     unreadCountTextStyle: {
-        fontSize: 8,
-        fontWeight: '500',
+        fontSize: 12,
+        fontWeight: '800',
         color: '#fff'
     },
     renderLastMessageViewStyle: {
@@ -307,8 +320,11 @@ const styles = {
         marginLeft: 10
     },
     renderLastMessageTextStyle: {
-        fontSize: 12,
+        fontSize: 18,
         color: '#878D99',
         marginTop: 3,
+    },
+    body: {
+        backgroundColor: '#ffffff'
     }
 };

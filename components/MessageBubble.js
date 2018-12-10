@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 const _renderNickname = (nickname) => {
     return nickname ? (
-        <Text style={{fontSize: 9, color: '#7048e8', paddingBottom: 4}}>{nickname}</Text>
+        <Text style={{fontSize: 15, color: '#7048e8', paddingBottom: 4}}>{nickname}</Text>
     ) : null;
 }
 
@@ -16,7 +16,7 @@ const MessageBubble = (props) => {
                 {props.message}
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'flex-end', paddingLeft: 8}}>
-                <Text style={{fontSize: 8, color: props.isUser ? '#E9EBEF' : '#878d99'}}>{props.time}</Text>
+                <Text style={{fontSize: 10, color: props.isUser ? '#E9EBEF' : '#878d99'}}>{props.time}</Text>
             </View>
         </View>
     )

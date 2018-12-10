@@ -23,22 +23,26 @@ import {
   ImageItem,
   Message,
   AdminMessage } from "../components";
-import ImagePicker from "react-native-image-picker";
-import {
-  sbGetGroupChannel,
-  sbGetOpenChannel,
-  sbCreatePreviousMessageListQuery,
-  sbAdjustMessageList,
-  sbIsImageMessage,
+
+import { 
+  sbGetGroupChannel, 
+  sbGetOpenChannel, 
+  sbCreatePreviousMessageListQuery, 
+  sbAdjustMessageList, 
+  sbIsImageMessage, 
   sbMarkAsRead } from "../sendbirdActions";
-  import { MessageInput } from '../components/MessageInput';
+import { MessageInput } from '../components/MessageInput';
+import { ImagePicker } from 'expo';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
+
 class Chat extends Component {
+
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
+    var title = params.title.split(",");
     return {
-      title: `${params.title}`,
+      title: `${title[0]}`,
       headerStyle: {
         backgroundColor: '#33FFC1',
         textAlign: 'center'
@@ -174,44 +178,52 @@ class Chat extends Component {
     }
   };
 
-  _onPhotoAddPress = () => {
+  _onPhotoAddPress = (result) => {
+    console.log("onPhotoAddPress selected");
     const { channelUrl, isOpenChannel } = this.props.navigation.state.params;
     Permissions.checkMultiple([ 'photo' ]).then(response => {
+      console.log("onPhotoAddPress inside permissions");
+      console.log("response: " + response.photo);
       if(response.photo === 'authorized') {
-        ImagePicker.showImagePicker(
-          {
-            title: "Select Image File To Send",
-            mediaType: "photo",
-            noData: true
-          },
-          response => {
-            if (!response.didCancel && !response.error && !response.customButton) {
-              let source = { uri: response.uri };
-              if (response.name) {
-                source["name"] = response.fileName;
-              } else {
-                paths = response.uri.split("/");
-                source["name"] = paths[paths.length - 1];
-              }
-              if (response.type) {
-                source["type"] = response.type;
-              } else {
-                /** For react-native-image-picker library doesn't return type in iOS,
-                 *  it is necessary to force the type to be an image/jpeg (or whatever you're intended to be).
-                */
-                if (Platform.OS === "ios") {
-                  source["type"] = 'image/jpeg';
-                }
-              }
-              this.props.onFileButtonPress(channelUrl, isOpenChannel, source);
+        console.log("onPhotoAddPress inside response.photo authorized");
+
+        let results = result;
+
+        console.log("photo: " + results);
+
+        if (!results.cancelled) {
+          console.log("result.cancelled not true");
+          let source = { uri: results.uri };
+          console.log("source: " + source);
+          console.log("uri: " + results.uri);
+          if (!result.name) {
+            source["name"] = results.fileName;
+            console.log("source: " + source["name"]);
+          } else {
+            paths = results.uri.split("/");
+            source["name"] = paths[paths.length - 1];
+          }
+          if (result.type) {
+            source["type"] = response.type;
+          } else {
+            /** For react-native-image-picker library doesn't return type in iOS,
+             *  it is necessary to force the type to be an image/jpeg (or whatever you're intended to be).
+            */
+            if (Platform.OS === "ios") {
+              source["type"] = 'image/jpeg';
             }
           }
-        );
+          console.log("photo before onFileButtonPress");
+          this.props.onFileButtonPress(channelUrl, isOpenChannel, source);
+        }
+          
       } else if(response.photo === 'undetermined') {
+        console.log("onPhotoAddPress inside response.photo undetermined");
         Permissions.request('photo').then(response => {
           this._onPhotoAddPress();
         });
       } else {
+        console.log("onPhotoAddPress inside response.photo else");
         Alert.alert('Permission denied',
           'You declined the permission to access to your photo.',
           [ { text: 'OK' } ],
@@ -219,6 +231,22 @@ class Chat extends Component {
       }
     });
   };
+
+
+  _pickImage = async () => {
+    console.log("Inside pickImage");
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: false,
+    });
+
+    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+    }
+
+    console.log("inside PI: " + result)
+    this._onPhotoAddPress(result);
+  };
+
 
   _renderFileMessageItem = rowData => {
     const message = rowData.item;
@@ -263,7 +291,7 @@ class Chat extends Component {
         <View style={{ opacity: this.props.typing ? 1 : 0, marginRight: 8 }}>
           {/* <BarIndicator count={4} size={10} animationDuration={900} color="#cbd0da" /> */}
         </View>
-        <Text style={{ color: "#cbd0da", fontSize: 10 }}>{this.props.typing}</Text>
+        <Text style={{ color: "#556077", fontSize: 15 }}>{this.props.typing}</Text>
       </View>
     );
   };
@@ -285,7 +313,7 @@ class Chat extends Component {
         <View style={styles.messageInputViewStyle}>
           {this._renderTyping()}
           <MessageInput
-            onLeftPress={this._onPhotoAddPress}
+            onLeftPress={this._pickImage}
             onRightPress={this._onSendButtonPress}
             textMessage={this.state.textMessage}
             onChangeText={this._onTextMessageChanged}
@@ -339,7 +367,7 @@ const styles = {
   },
   messageInputViewStyle: {
     flex: 1,
-    marginBottom: 0,
+    marginBottom: 5,
     flexDirection: "column",
     justifyContent: "center"
   }

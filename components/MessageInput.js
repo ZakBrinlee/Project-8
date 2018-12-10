@@ -8,12 +8,12 @@ const MessageInput = (props) => {
     return (
         <View style={styles.containerStyle}>
             <Icon
-                containerStyle={{marginLeft: 10}}
+                containerStyle={{marginLeft: 5, marginTop: 5}}
                 iconStyle={{margin: 0, padding: 0}}
                 name='plus'
                 type='font-awesome'
                 color={'#494e57'}
-                size={20}
+                size={25}
                 onPress={props.onLeftPress}
             />
             <View style={styles.inputViewStyle}>
@@ -41,12 +41,12 @@ const MessageInput = (props) => {
                 />
             </View>
             <Icon
-                containerStyle={{marginLeft: 0}}
+                containerStyle={{marginLeft: 0, marginTop: 5}}
                 iconStyle={{margin: 0, padding: 0}}
                 name='envelope'
                 type='font-awesome'
                 color={props.textMessage.length > 0 ? '#7d62d9' : '#494e57'}
-                size={20}
+                size={25}
                 onPress={props.onRightPress}
             />
         </View>
@@ -63,7 +63,7 @@ const styles = {
         paddingRight: 8
     },
     inputStyle: {
-        fontSize:13,
+        fontSize:15,
         backgroundColor:'#fff'
     }
 }

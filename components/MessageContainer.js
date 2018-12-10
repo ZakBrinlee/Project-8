@@ -4,7 +4,7 @@ import { MessageBubble } from './MessageBubble';
 
 const _renderUnreadCount = (readCount) => {
     return readCount ? (
-        <Text style={{fontSize: 10, color: '#f03e3e'}}>{readCount}</Text>
+        <Text style={{fontSize: 15, color: '#f03e3e'}}>{readCount}</Text>
     ) : null;
 }
 

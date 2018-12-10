@@ -7,6 +7,25 @@ import { connect } from 'react-redux';
 import { sendbirdLogin } from '../../actions';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
+  
+//   async function checkMultiPermissions() {
+//     const { Permissions } = Expo;
+//     const { status, expires, permissions } = await Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL)
+//     if (status !== 'granted') {
+//       alert('Hey! You heve not enabled selected permissions');
+//     }
+//   }
+
+  async function getCameraAsync() {
+    const { Camera, Permissions } = Expo;
+    const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+    if (status === 'granted') {
+      console.log("getCameraAsync : " + status)
+    } else {
+      throw new Error('Camera permission not granted');
+    }
+  }
+
 class LoginScreen extends React.Component {
 
     static navigationOptions = { header: null }
@@ -21,6 +40,10 @@ class LoginScreen extends React.Component {
         // this.renderItem = this.renderItem.bind(this);
     }
 
+    componentWillMount() {
+        // checkMultiPermissions();
+        getCameraAsync();
+    }
     componentWillReceiveProps(props) {
         const { user, error } = props;
         if (user) {
@@ -157,13 +180,14 @@ const styles = StyleSheet.create({
     },
 
     box1:{
-        flex:0.25,
         backgroundColor:'white',
+        flexDirection: 'row'
     },
 
     logo:{
         width:85,
         height:87,
+        backgroundColor: 'black'
     },
 
     welcome:{
@@ -172,7 +196,10 @@ const styles = StyleSheet.create({
         fontWeight:'600',
         textAlign:'right',
         paddingRight:5,
-
+        alignSelf: 'flex-end',
+        marginLeft: 'auto',
+        marginTop: 'auto',
+        marginBottom: 'auto'
     },
 
     box2:{

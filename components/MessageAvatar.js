@@ -11,7 +11,7 @@ const _renderAvatar = (isShow, uri, onImagePress) => {
         <Avatar 
             small
             rounded
-            source={uri === 'default-image' ? require('../assets/images/icon_sb_68.png') : { uri } }
+            source={uri === 'default-image' ? require('../assets/images/robot-dev.png') : { uri } }
             onPress={onImagePress}
         />
     ) : null;
