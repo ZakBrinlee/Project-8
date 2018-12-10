@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ListView, Text, TouchableOpacity } from 'react-native';
 import { Divider } from 'react-native-elements';
-import {Button, Item, Icon, Label, Input, Form, Content, Container, List, ListItem} from 'native-base';
+import {Button, Item, Icon, Label, Input, Form, Content, Container, List, ListItem, Left, Body, Right, Thumbnail} from 'native-base';
 import * as firebase from 'firebase';
 
-var data = ["Zak", "Rich"];
-
+const data = [];
 export default class StylistRecords extends Component {
   
   static navigationOptions = ({navigation}) => ({
@@ -20,10 +19,13 @@ export default class StylistRecords extends Component {
       textAlign: 'center'
     },
     headerRight: (
-      <Button onPress={() => navigation.navigate('StylistRecordsAdd')}>
-        <Icon name='add' />
-      </Button>
-  )
+      <Icon
+      ios='ios-add' 
+      android="md-add"
+      onPress={() => navigation.navigate('StylistRecordsAdd')}
+      style={{fontSize: 30, color: '#6b52ae', marginRight: 20}}
+      />
+    ),
   });
   
   constructor(props) {
@@ -31,12 +33,18 @@ export default class StylistRecords extends Component {
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       listViewData: data, 
-      job: "",
       uid: "",
     }
   }
 
+
+  componentWillMount(){
+    this.getUserRole();
+  }
+
   getUserRole() {
+
+    var that = this
     //console.log("Inside getUserRole");
     var user = firebase.auth().currentUser;
     if (user != null){
@@ -46,59 +54,56 @@ export default class StylistRecords extends Component {
     }
 
     //console.log("Inside method userEmail: " + this.state.userEmail);
-    var itemsRef = firebase.database().ref('/UsersList/' + user.uid);
-    itemsRef.once('value').then(snapshot => {
-      this.setState({ role: snapshot.child("role").val() });
-      this.setState({ name: snapshot.child("name").val() });
-      //console.log("User Role from DB: " + this.state.role);
-    });         
+    var itemsRef = firebase.database().ref('/UsersList/' + user.uid + "/StyleRecords");
+    itemsRef.on('child_added', function(data) {
+
+      var newData = [...that.state.listViewData]
+      newData.push(data)
+      that.setState({ listViewData: newData })
+    });
+  
+}
+
+async deleteRow(secId, rowId, rowMap, data) {
+
+  console.log("inside Delete: " + data.key);
+  await firebase.database().ref('/UsersList/' + this.state.uid + "/StyleRecords/" + data.key).remove();
+
+  rowMap[`${secId}${rowId}`].props.closeRow();
+  var newData = [...this.state.listViewData];
+  newData.splice(rowId, 1)
+  this.setState({ listViewData: newData });
 
 }
 
-  renderSeparator = () => {
-    return (<Divider style={{ backgroundColor: '#6b52ae', height: 3 }} />);
-  };
-
-  renderHeader = () => {
-    return <SearchBar placeholder="Type Here..." lightTheme round />;
-  };
- 
-
-  addRow(){
-
-  }
-
-  deleteRow(){
-
-  }
-
-  showInformation(){
-
-  }
-
   render() {   
+    // console.log("Jobs: " + this.state.listViewData)
     return (
       <Container style={styles.container} >
         <Content>
           <List 
             dataSource={this.ds.cloneWithRows(this.state.listViewData)}
             renderRow={ data =>
-              <ListItem>
-                <Text>{data}</Text>
-              </ListItem>
+             <ListItem avatar>
+              <Left>
+                <Thumbnail source={require('../../assets/images/Danielle.jpg')} />
+              </Left>
+              <Body>
+                <Text>{data.val().customer}</Text>
+                <Text>Date: {data.val().chosenDate.substr(4, 12)}</Text>
+                <Text note>Note: {data.val().note}</Text>
+              </Body>
+              <Right>
+                <Text note>${data.val().amount}</Text>
+                <Text note>Time: {data.val().time}/hrs</Text>
+              </Right>
+            </ListItem>
             }
-            renderLeftHiddenRow={data=>
-              <Button full>
-                <Icon name="information-circle"/>
+            renderRightHiddenRow={(data, secId, rowId, rowMap) =>
+              <Button full danger onPress={() => this.deleteRow(secId, rowId, rowMap, data)}>
+                <Icon name="trash" />
               </Button>
             }
-            renderRightHiddenRow={data=>
-              <Button full danger>
-                <Icon name="trash"/>
-              </Button>
-            }
-
-            leftOpenValue={-75}
             rightOpenValue={-75}
           />
 

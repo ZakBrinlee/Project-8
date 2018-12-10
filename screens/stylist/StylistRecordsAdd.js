@@ -59,7 +59,7 @@ export default class StylistRecordsAdd extends Component {
  
     submitRecord() {
         const customer = this.state.customer;
-        const chosenDate = this.state.chosenDate.toString();
+        const chosenDate = this.state.chosenDate.toString().substr(4, 12);
         const time = this.state.time;
         const amount = this.state.amount;
         const note = this.state.note;
@@ -156,7 +156,9 @@ export default class StylistRecordsAdd extends Component {
                     rowSpan={5} 
                     bordered placeholder="Notes" 
                     onChangeText={this.setNote.bind(this)}
+                    style={{marginBottom: 25}}
                     />
+                <KeyboardSpacer/>
                 <Button block onPress={this.submitRecord}>
                     <Text>Add Style Record</Text>
                 </Button>

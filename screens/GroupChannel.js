@@ -30,7 +30,7 @@ class GroupChannel extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params } = navigation.state;
         return {
-            title: 'Chat Messages',
+            title: 'Messages',
             headerStyle: {
                 backgroundColor: '#33FFC1',
                 textAlign: 'center'
