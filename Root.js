@@ -7,6 +7,7 @@ import * as firebase from 'firebase';
 import ClientList from './screens/stylist/ClientList';
 import ClientHomeScreen from './screens/client/ClientHome';
 import ClientProfile from './screens/client/ClientUpdateProfile';
+import ImageUpload from './screens/client/ImageUploadScreen';
 import StylistHomeScreen from './screens/stylist/StylistHome';
 import StylistRecordScreen from './screens/stylist/StylistRecords';
 import GroupChannel from './screens/GroupChannel';
@@ -20,7 +21,10 @@ import Chat from './screens/Chat';
       },
       ClientProfile: {
         screen: ClientProfile
-      }
+      },
+      ImageUpload:{
+        screen : ImageUpload
+      },
     },
     {
       initialRouteName: 'ClientHomeScreen',
@@ -52,8 +56,8 @@ import Chat from './screens/Chat';
       initialRouteName: 'StylistHomeScreen',
     }
   );
- 
-export default StackNavigator(
+
+   export default TabNavigator(
   {
     StylistStack: {
       screen: StylistStack
@@ -63,12 +67,46 @@ export default StackNavigator(
     },
   },
   { 
-    initialRouteName: 'StylistStack',
+    initialRouteName: 'StylistStack'
+  },
+  {
     navigationOptions: ({ navigation }) => ({
-      header: null
-    })
-  }
-  );
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName = icons[routeName];
+        let color = (focused) ? '#fff' : '#929292';
+
+        return <MaterialIcons name={iconName} size={35} color={color} />;
+      },
+    }),
+    tabBarPosition: 'bottom',
+    animationEnabled: true,
+    tabBarOptions: {
+      showIcon: true,
+      showLabel: false,
+      style: {
+        backgroundColor: '#333'
+      }
+    }
+  },
+);
+ 
+//export default StackNavigator(
+ // {
+   // StylistStack: {
+   //   screen: StylistStack
+   // },
+    //ClientStack: {
+    // screen: ClientStack
+   // },
+  //}//,
+  //{ 
+    //initialRouteName: 'StylistStack',
+    //navigationOptions: ({ navigation }) => ({
+     // header: null
+   // })
+  //}
+  //);
   // {
   //   tabBarPosition: "bottom",
   //   animationEnabled: true,

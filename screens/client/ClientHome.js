@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {StyleSheet,Text,View,Image,Button,ScrollView,TouchableOpacity} from 'react-native';
 import * as firebase from 'firebase';
 import { AsyncStorage } from "react-native"
+import { NavigationActions } from 'react-navigation';
+import RootStackNavigator from '../../navigation/RootNavigation';
 
 export default class ClientHome extends React.Component {
    static navigationOptions = {
@@ -127,6 +129,13 @@ export default class ClientHome extends React.Component {
                     <TouchableOpacity onPress={this.onSignoutPress}>
                       <Image style={styles.icon} source={{uri: 'https://png.icons8.com/icon/46/delete'}}/>
                       <Text style={styles.info}>SignOut</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.menuBox}>
+                     <TouchableOpacity onPress = {() => {navigate('ImageUpload')}} >
+                      <Image style={styles.icon} source={{uri:'https://png.icons8.com/icon/5376/camera'}}/>
+                      <Text style={styles.info}>Upload</Text>
                     </TouchableOpacity>
                   </View>
 
