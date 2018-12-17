@@ -58,27 +58,27 @@ class SignupScreen extends React.Component {
         console.log("Just created user");
     }
 
-    componentDidMount() {
-        firebase.auth().onAuthStateChanged( user => {
-            if(user){
-                this.writeUserData(user.uid, user.email, this.state.role, this.state.nickname);
-            }
-        })
-    }
+    // componentDidMount() {
+    //     firebase.auth().onAuthStateChanged( user => {
+    //         if(user){
+    //             this.writeUserData(user.uid, user.email, this.state.role, this.state.nickname);
+    //         }
+    //     })
+    // }
 
-    writeUserData(userID, email, role = this.state.role, name = this.state.nickname){
-        firebase.database().ref('UsersList/' + userID).set({
-            email,
-            role, 
-            name
-        }).then((data)=>{
-            //success callback
-            console.log('data ' , data)
-        }).catch((error)=>{
-            //error callback
-            console.log('error ' , error)
-        })
-    }
+    // writeUserData(userID, email, role = this.state.role, name = this.state.nickname){
+    //     firebase.database().ref('UsersList/' + userID).set({
+    //         email,
+    //         role, 
+    //         name
+    //     }).then((data)=>{
+    //         //success callback
+    //         console.log('data ' , data)
+    //     }).catch((error)=>{
+    //         //error callback
+    //         console.log('error ' , error)
+    //     })
+    // }
 
     onBackToLoginPress = () => {
         var navActions = NavigationActions.reset({

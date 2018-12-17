@@ -1,15 +1,14 @@
 import { Notifications } from 'expo';
 import React from 'react';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 //Screen imports
 import LoginScreen from './../screens/auth/LoginScreen';
 import SignupScreen from './../screens/auth/SignupScreen';
 import ForgotPasswordScreen from './../screens/auth/ForgotPasswordScreen';
 
-//Zak's ongoing test work
+//ongoing test work
 const RootStackNavigator = StackNavigator(
   {
     LoginScreen: {
@@ -31,10 +30,7 @@ const RootStackNavigator = StackNavigator(
 
 export default class RootNavigator extends React.Component {
 
-  // componentWillMount(){
-  //   role = getUserRole;
-  //   this.props.navigation.navigate(role == 'client' ? 'Client' : 'Stylist');
-  // }
+  
   componentDidMount() {
     this._notificationSubscription = this._registerForPushNotifications();
   }

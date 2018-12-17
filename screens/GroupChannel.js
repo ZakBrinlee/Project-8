@@ -186,7 +186,7 @@ class GroupChannel extends Component {
     _onChannelLeave = (channelUrl) => {
         Alert.alert(
             'Leave',
-            'Are you sure want to leave channel?',
+            'Are you sure want to delete chat?',
             [
                 {text: 'Cancel'},
                 {text: 'OK', onPress: () => this.props.onLeaveChannelPress(channelUrl)},
@@ -325,6 +325,6 @@ const styles = {
         marginTop: 3,
     },
     body: {
-        backgroundColor: '#ffffff'
+        backgroundColor: 'white'
     }
 };

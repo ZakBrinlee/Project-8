@@ -1,133 +1,159 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
-import { connect } from 'react-redux';
-import { initProfile, getCurrentUserInfo, updateProfile } from '../actions'
-import { Avatar, Icon } from '../components';
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { StyleSheet, Alert } from 'react-native';
+import {Button, Item, Icon, Label, Input, Form, Content, Container, Picker, Text, Textarea, DatePicker} from 'native-base';
+import * as firebase from 'firebase';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-class Profile extends Component {
-    static navigationOptions = ({ navigation }) => {
-        const { params } = navigation.state;
-        return {
-            title: 'Profile',
-            headerStyle: {
-                backgroundColor: '#33FFC1',
-                textAlign: 'center'
-              },
-              headerTitleStyle: {
-                color: '#6b52ae', 
-                fontWeight: 'bold',
-              },
-            headerRight: (
-                <Icon
-                    name='md-checkmark-circle'
-                    type='ionicon'
-                    color='#6b52ae'
-                    containerStyle={{ marginRight: 20 }}
-                    size={25}
-                    onPress={ () => { params.handleSave() } }                />
-            )
-        }
-    };
+export default class Profile extends Component {
+  
+  static navigationOptions = ({navigation}) => ({
+    headerTitle: 'Profile',
+    headerStyle: {
+      backgroundColor: '#33FFC1',
+      textAlign: 'center'
+    },
+    headerTitleStyle: {
+      color: '#6b52ae', 
+      fontWeight: 'bold',
+      textAlign: 'center'
+    },
+    headerRight: (
+        <Button hasText transparent onPress={() => onSignoutPress()}>
+              <Text style={{fontSize: 15, fontWeight: 'bold', color: '#6b52ae'}}>Sign out</Text>
+        </Button>
+    ),
+  });
+  
+  onSignoutPress = () => {
+    const sb = new SendBird({ 'appId': '0B7E1CDE-5B22-4850-8BC5-4F1B109CFD91' });
+    firebase.auth().signOut();
+      
+    sb.disconnect(function(){
+      // You are disconnected from SendBird.
+    });
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: false,
-            profileUrl: '',
-            nickname: ''
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      uid: "",
+      name: "",
+      about: "",
+      role: "",
     }
+    this.submitProfile = this.submitProfile.bind(this);
+  }
 
-    componentDidMount() {
-        this.props.navigation.setParams({ handleSave: this._onSaveButtonPress })
-        this.props.initProfile();
-        this.setState({ isLoading: true }, () => {
-            this.props.getCurrentUserInfo();
+  componentWillMount(){
+    this.getUserRole();
+  }
+  
+  getUserRole() {
+        console.log("Inside getUserRole");
+        var user = firebase.auth().currentUser;
+        if (user != null){
+            this.setState({uid: user.uid});
+        } else {
+            console.log("Unable to locate current user");
+        }
+
+        console.log("Inside method userEmail: " + this.state.userEmail);
+        var itemsRef = firebase.database().ref('/UsersList/' + user.uid);
+        itemsRef.once('value').then(snapshot => {
+          this.setState({ role: snapshot.child("role").val() });
+          this.setState({ name: snapshot.child("name").val() });
+          this.setState({ about: snapshot.child("about").val() });
+          //console.log("User Role from DB: " + this.state.role);
+        });         
+
+    }
+ 
+    submitProfile() {
+        console.log("Inside SubmitProfile method");        
+        const name = this.state.name;
+        const role = this.state.role;
+        const about = this.state.about;
+        const { navigate } = this.props.navigation;
+
+        firebase.database().ref('UsersList/' + this.state.uid).update({
+            name,
+            role,
+            about
+        }, function(error) {
+          if (error) {
+            Alert.alert(
+              'Error',
+              'Are you sure want to delete chat?',
+              [
+                  {text: 'OK', onPress: () => {navigate('StylistHome')}},
+              ]
+          )
+          } else {
+            // Data saved successfully!
+            Alert.alert(
+              'Success',
+              'Profile information successfully saved',
+              [
+                  {text: 'OK', onPress: () => {navigate('StylistHome')}},
+              ]
+          )
+            //this.successGoBack;
+          }
         });
+      
     }
 
-    componentWillReceiveProps(props) {
-        const { userInfo, isSaved } = props;
-        if (userInfo) {
-            const { profileUrl, nickname } = userInfo;
-            const isLoading = false;
-            this.setState({ profileUrl, nickname, isLoading });
-        }
-        if (isSaved) {
-            this.props.navigation.goBack();
-        }
-    }
+  setName(newName) {
+    this.setState({ name: newName });
+  }
 
-    _onNicknameChanged = (nickname) => {
-        this.setState({ nickname });
-    }
+  setAbout(newAbout) {
+    this.setState({ about: newAbout });
+  }
 
-    _onSaveButtonPress = () => {
-        this.props.updateProfile(this.state.nickname);
-    }
-
-    render() {
-        console.log("Inside Profile Render");
-        return (
-            <View style={styles.containerStyle}>
-                {/* <Spinner visible={this.state.isLoading} /> */}
-                <View style={{justifyContent: 'center', flexDirection: 'row', marginTop: 50, marginBottom: 50}}>
-                <Text>Something</Text>
-                    <Avatar 
-                        large
-                        rounded
-                        source={this.state.profileUrl ? {uri: this.state.profileUrl} : require('../assets/images/robot-dev.png')}
+  render() {  
+    const { navigate } = this.props.navigation;
+    return (
+      <Container style={styles.container} >
+        <Content>
+            <Form>
+                 <Item stackedLabel>
+                    <Label>Name</Label>
+                    <Input 
+                        value = {this.state.name}
+                        onChangeText={this.setName.bind(this)}
                     />
-                </View>
-
-                <Text>Nickname</Text>
-                <TextInput 
-                    style={styles.defaultMargin}
-                    selectionColor = { '#000' }
-                    inputStyle={{color: '#000'}}
-                    value={this.state.nickname}
-                    maxLength={12}
-                    onChangeText={this._onNicknameChanged} 
-                />
-                <Text style={{marginLeft: 14}}>{this.props.error}</Text>
-
-                {/* <FormLabel labelStyle={[styles.defaultMargin, {marginTop: 20, fontSize: 13, fontWeight: '400'}]}>
-                    Nickname
-                </FormLabel>
-                <FormInput 
-                    containerStyle={styles.defaultMargin}
-                    selectionColor = { '#000' }
-                    inputStyle={{color: '#000'}}
-                    value={this.state.nickname}
-                    maxLength={12}
-                    onChangeText={this._onNicknameChanged} 
-                />
-                <FormValidationMessage labelStyle={{marginLeft: 14}}>
-                    {this.props.error}
-                </FormValidationMessage> */}
-            </View>
-        )
-    }
+                </Item>
+                <Textarea 
+                    rowSpan={5} 
+                    bordered placeholder="About" 
+                    value={this.state.about}
+                    onChangeText={this.setAbout.bind(this)}
+                    style={{marginBottom: 25}}
+                    />
+                <KeyboardSpacer/>
+                <Button block onPress={this.submitProfile}>
+                    <Text>Save Profile</Text>
+                </Button>
+            </Form>
+        </Content>
+      </Container>
+    );
+  }
 }
 
-const styles = {
-    containerStyle: {
-        backgroundColor: '#fff', 
-        flex: 1
-    },
-    defaultMargin: {
-        marginLeft: 14, 
-        marginRight: 14
-    }
-};
-
-function mapStateToProps({ profile }) {
-    const { userInfo, error, isSaved } = profile;
-    return { userInfo, error, isSaved };
-};
-
-export default connect(
-    mapStateToProps, 
-    { initProfile, getCurrentUserInfo, updateProfile }
-)(Profile);
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    marginTop: 0,
+    padding: 20,
+    backgroundColor: '#ffffff',
+  },
+  textViewContainer: {
+    textAlignVertical:'center', 
+    padding:10,
+    fontSize: 20,
+    color: 'black',
+    
+   },
+});

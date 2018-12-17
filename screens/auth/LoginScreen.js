@@ -7,14 +7,6 @@ import { connect } from 'react-redux';
 import { sendbirdLogin } from '../../actions';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-  
-//   async function checkMultiPermissions() {
-//     const { Permissions } = Expo;
-//     const { status, expires, permissions } = await Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL)
-//     if (status !== 'granted') {
-//       alert('Hey! You heve not enabled selected permissions');
-//     }
-//   }
 
   async function getCameraAsync() {
     const { Camera, Permissions } = Expo;
@@ -33,7 +25,7 @@ class LoginScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: "zak@test.com",
+            userId: "shannon@privyd.com",
             password: "testtest",
 
         };
@@ -83,16 +75,6 @@ class LoginScreen extends React.Component {
         this.props.navigation.dispatch(navActions);
     }
 
-    // renderItem = ({item}) => {
-    //     const { navigate } = this.props.navigation;
-    //     return (
-    //       <TouchableHighlight key={item.key} underlayColor="#ccc" onPress={() => {
-    //         navigate('Signup');
-    //       }} style={styles.list_item}>
-    //         <Text key={item.key}>{item.name}</Text>
-    //       </TouchableHighlight>
-    //     );
-    //   }
 
     render() {
         const { navigate } = this.props.navigation;
@@ -102,7 +84,7 @@ class LoginScreen extends React.Component {
 
                     <Image
                         style={styles.logo}
-                        source={require('./logo.png')}
+                        source={require('../../assets/images/logo.png')}
                     />
                     <Text style={styles.welcome}>WELCOME TO PRIVYD</Text>
                 </View>

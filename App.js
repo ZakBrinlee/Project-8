@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import ApiKeys from './constants/ApiKeys';
 import * as firebase from 'firebase';
 import RootNavigator from './navigation/RootNavigation';
-import Root from './Root';
+import Root from './navigation/Root';
 import { AsyncStorage } from "react-native"
 import { Provider } from 'react-redux';
 import store from './store';
@@ -30,15 +30,6 @@ export default class App extends React.Component {
   onAuthStateChanged = (user) => {
     this.setState({isAuthenticationReady: true});
     this.setState({isAuthenticated: !!user});
-
-    //This will pull the role that is tied to the UID
-    // if (user != null){
-    // var itemsRef = firebase.database().ref('/UsersList/' + user.uid);
-    //   itemsRef.once('value').then(snapshot => {
-    //     this.setState({ role: snapshot.child("role").val() });
-    //     console.log("App.js User Role from DB: " + this.state.role);
-    //   });         
-    // }
 
     this.persistData();
 
@@ -85,6 +76,8 @@ export default class App extends React.Component {
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+        Roboto: require("native-base/Fonts/Roboto.ttf"),
+        Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
       }),
     ]);
   };

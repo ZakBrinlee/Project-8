@@ -42,7 +42,7 @@ export default class ForgotPasswordScreen extends React.Component {
                 <View style={styles.imageBox}>
                     <Image
                         style={styles.lock}
-                        source={require('./lock.jpg')}
+                        source={require('../../assets/images/lock.jpg')}
                     />
                     <Text style={styles.textPswd}>Forgot your password?</Text>
 

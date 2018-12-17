@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ListView, Text, TouchableOpacity } from 'react-native';
-import { Divider } from 'react-native-elements';
-import {Button, Item, Icon, Label, Input, Form, Content, Container, List, ListItem, Left, Body, Right, Thumbnail} from 'native-base';
+import { StyleSheet, ListView, Text } from 'react-native';
+import {Button, Icon, Content, Container, List, ListItem, Left, Body, Right, Thumbnail} from 'native-base';
 import * as firebase from 'firebase';
 
 const data = [];
@@ -86,7 +85,7 @@ async deleteRow(secId, rowId, rowMap, data) {
             renderRow={ data =>
              <ListItem avatar>
               <Left>
-                <Thumbnail source={require('../../assets/images/Danielle.jpg')} />
+                <Thumbnail source={require('../assets/images/Danielle.jpg')} />
               </Left>
               <Body>
                 <Text>{data.val().customer}</Text>
