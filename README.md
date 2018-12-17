@@ -1,9 +1,11 @@
 # Project-8
 
-This branch is my in development branch for navigation between users. 
+Framework: React Native 0.57.8
+Platform: Expo v.31.0.0
+Authentication: Firebase Authenticaion
+Storage: Firebase
+Messaging: Sendbird Chat API
 
-Following some of the following tutorials:
+Clone repo - Run 'npm install'
+Launch Expo - Run 'expo start'
 
-https://blog.pusher.com/getting-started-react-native-part-2/
-
-https://www.skcript.com/svr/getting-smart-with-react-navigation/
